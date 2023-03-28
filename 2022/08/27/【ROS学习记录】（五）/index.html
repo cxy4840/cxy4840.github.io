@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Ros_logo.png">
 <meta property="article:published_time" content="2022-08-27T10:56:20.000Z">
-<meta property="article:modified_time" content="2023-03-28T08:57:04.280Z">
+<meta property="article:modified_time" content="2023-03-28T09:42:03.007Z">
 <meta property="article:author" content="Xiaoyu">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary_large_image">
@@ -197,7 +197,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/Ros_logo.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/%E8%93%9D%E8%8A%B1%E6%A5%B9%E6%A0%91%E4%B8%8A%E7%9A%84%E5%B0%8F%E9%B8%9F.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -284,15 +284,15 @@
                 <blockquote>
 <p>近期为了使得更多的设备可以连入ROS，开始转向Windows平台的ROS，遇到一些问题</p>
 <ol>
-<li>无法编译问题，如何解决，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36651243/article/details/115689930]">CSDN:离歌漠</a>,的文章，下载Ninja到系统变量中</li>
+<li>无法编译问题，如何解决，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36651243/article/details/115689930">CSDN:离歌漠</a>,的文章，下载Ninja到系统变量中</li>
 <li>编译出现依赖项无法下载的问题，将在下述文章中详细阐述</li>
 </ol>
 </blockquote>
 <h3 id="编译出现依赖项无法下载的问题"><a href="#编译出现依赖项无法下载的问题" class="headerlink" title="编译出现依赖项无法下载的问题"></a>编译出现依赖项无法下载的问题</h3><p>我们在使用ROS编译的过程中可能会出现这样的问题</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Could not find a package configuration file provided by<br> <span class="hljs-string">&quot;industrial_robot_status_interface&quot;</span> with any of the following names:<br></code></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/d71fb9212c67470db62394413fca11a5.png" srcset="/img/loading.gif" lazyload alt="依赖需要重新下载"><br>在Ubuntu上可以很简单的解决这种依赖找不到的问题，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/gyxx1998/article/details/118153079">CSDN:冰激凌啊</a>，</p>
+<p><img src="/2022/08/27/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89/%E9%97%AE%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="依赖需要重新下载"><br>在Ubuntu上可以很简单的解决这种依赖找不到的问题，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/gyxx1998/article/details/118153079">CSDN:冰激凌啊</a>，</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install ros-melodic-ur-client-library<br></code></pre></td></tr></table></figure>
-<p>但是在windows上我们只能用git 或者 chocolate，因此我到处找教程发现可以自行下载git包后用rosdep进行导入，参考<a target="_blank" rel="noopener" href="https://github.com/gavanderhoorn/industrial_robot_status_controller">GitHub:gavanderhoorn&#x2F;industrial_robot_status_controller</a><br><img src="https://img-blog.csdnimg.cn/27efdffc815046369b10d3506cc6e58b.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>但是在windows上我们只能用git 或者 chocolate，因此我到处找教程发现可以自行下载git包后用rosdep进行导入，参考<a target="_blank" rel="noopener" href="https://github.com/gavanderhoorn/industrial_robot_status_controller">GitHub:gavanderhoorn&#x2F;industrial_robot_status_controller</a><br><img src="/2022/08/27/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89/%E8%87%AA%E8%A1%8C%E4%B8%8B%E8%BD%BDgit%E5%8C%85.png" srcset="/img/loading.gif" lazyload alt="自行下载git包.png"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt; git -C catkin_ws/src <span class="hljs-built_in">clone</span> https://github.com/gavanderhoorn/industrial_robot_status_controller.git<br>&gt; <span class="hljs-comment">#如果不行就直接下载解压到src</span><br>&gt; rosdep update<br>&gt; rosdep install --from-paths src -i<br>&gt; <span class="hljs-built_in">cd</span> catkin_ws<br></code></pre></td></tr></table></figure>
 <p>这样子Windows下的rosdep问题就可以解决了</p>
 
@@ -364,9 +364,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/26/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" title="【PyQt5-多线程】写PyQt5小界面的多线程错误示范和正确示范">
+                      <a href="/2023/02/07/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/" title="【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【PyQt5-多线程】写PyQt5小界面的多线程错误示范和正确示范</span>
+                        <span class="hidden-mobile">【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -486,7 +486,7 @@
   
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-  <script src="https://giscus.app/client.js"
+  <!-- <script src="https://giscus.app/client.js"
         data-repo="cxy4840/cxy4840.github.io"
         data-repo-id="R_kgDOJObwOQ"
         data-category="[在此输入分类名]"
@@ -499,7 +499,7 @@
         data-theme="preferred_color_scheme"
         data-lang="zh-CN"
         crossorigin="anonymous"
-        async>
+        async> -->
 </script>
 </div>
 
