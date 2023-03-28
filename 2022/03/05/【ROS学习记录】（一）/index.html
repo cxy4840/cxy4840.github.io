@@ -16,24 +16,24 @@
   <meta name="author" content="Xiaoyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一. 为什么使用WSL2虚拟而不是VMware 或者 Orical Virtualbox 因为这个VMware不够轻量化 Vmware无法调用显卡配置，而在我的项目中需要用独立显卡来渲染gazebo  二. 如何实现1. 硬件配置要求 windows11 或者 windows 10 版本 2004 及更高版本（内部版本 19041 及更高版本）  2. 学习教程  Microsoft Learn">
+    <meta name="description" content="【ROS学习记录】（一） 由于github上开源的关于PhantomOmni-UR5的源代码在本电脑上复现出现不少问题，这么修也办法成功（主要是也想好好的学一下如何控制ROS系统），于是我决定从头开始，认真学习ROS系统框架最近学习的主要是如何使用ROS系统自带的Topic？如何使用Publish和Subscriber？如何使用Launch文件？以及以上的一些小细节。  1. 使用Subscrib">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化">
-<meta property="og:url" content="http://example.com/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/index.html">
+<meta property="og:title" content="【ROS学习记录】（一）">
+<meta property="og:url" content="http://example.com/2022/03/05/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="Xiaoyu&#39;s Blog">
-<meta property="og:description" content="一. 为什么使用WSL2虚拟而不是VMware 或者 Orical Virtualbox 因为这个VMware不够轻量化 Vmware无法调用显卡配置，而在我的项目中需要用独立显卡来渲染gazebo  二. 如何实现1. 硬件配置要求 windows11 或者 windows 10 版本 2004 及更高版本（内部版本 19041 及更高版本）  2. 学习教程  Microsoft Learn">
+<meta property="og:description" content="【ROS学习记录】（一） 由于github上开源的关于PhantomOmni-UR5的源代码在本电脑上复现出现不少问题，这么修也办法成功（主要是也想好好的学一下如何控制ROS系统），于是我决定从头开始，认真学习ROS系统框架最近学习的主要是如何使用ROS系统自带的Topic？如何使用Publish和Subscriber？如何使用Launch文件？以及以上的一些小细节。  1. 使用Subscrib">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/MoonAndFlower.JPG">
-<meta property="article:published_time" content="2023-03-28T03:07:28.278Z">
-<meta property="article:modified_time" content="2023-03-28T08:01:28.165Z">
+<meta property="og:image" content="http://example.com/img/Ros_logo.png">
+<meta property="article:published_time" content="2022-03-05T14:16:16.000Z">
+<meta property="article:modified_time" content="2023-03-28T08:51:10.228Z">
 <meta property="article:author" content="Xiaoyu">
-<meta property="article:tag" content="WSL&#x2F;WSL2">
+<meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/MoonAndFlower.JPG">
+<meta name="twitter:image" content="http://example.com/img/Ros_logo.png">
   
   
   
-  <title>【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化 - Xiaoyu&#39;s Blog</title>
+  <title>【ROS学习记录】（一） - Xiaoyu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,13 +197,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/MoonAndFlower.JPG') no-repeat center center; background-size: cover;">
+     style="background: url('/img/Ros_logo.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化"></span>
+            <span id="subtitle" data-typed-text="【ROS学习记录】（一）"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-28 11:07" pubdate>
-          2023年3月28日 上午
+        <time datetime="2022-03-05 22:16" pubdate>
+          2022年3月5日 晚上
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          1.6k 字
         
       </span>
     
@@ -276,54 +276,15 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化</h1>
+            <h1 style="display: none">【ROS学习记录】（一）</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="一-为什么使用WSL2虚拟而不是VMware-或者-Orical-Virtualbox"><a href="#一-为什么使用WSL2虚拟而不是VMware-或者-Orical-Virtualbox" class="headerlink" title="一. 为什么使用WSL2虚拟而不是VMware 或者 Orical Virtualbox"></a>一. 为什么使用WSL2虚拟而不是VMware 或者 Orical Virtualbox</h1><ol>
-<li>因为这个VMware不够轻量化</li>
-<li>Vmware无法调用显卡配置，而在我的项目中需要用独立显卡来渲染gazebo</li>
-</ol>
-<h1 id="二-如何实现"><a href="#二-如何实现" class="headerlink" title="二. 如何实现"></a>二. 如何实现</h1><h2 id="1-硬件配置要求"><a href="#1-硬件配置要求" class="headerlink" title="1. 硬件配置要求"></a>1. 硬件配置要求</h2><blockquote>
-<p>windows11 或者 windows 10 版本 2004 及更高版本（内部版本 19041 及更高版本）</p>
+                <h1 id="【ROS学习记录】（一）"><a href="#【ROS学习记录】（一）" class="headerlink" title="【ROS学习记录】（一）"></a>【ROS学习记录】（一）</h1><blockquote>
+<p>由于github上开源的关于PhantomOmni-UR5的源代码在本电脑上复现出现不少问题，这么修也办法成功（主要是也想好好的学一下如何控制ROS系统），于是我决定从头开始，认真学习ROS系统框架<br>最近学习的主要是<br>如何使用ROS系统自带的Topic？<br>如何使用Publish和Subscriber？<br>如何使用Launch文件？<br>以及以上的一些小细节。</p>
 </blockquote>
-<h2 id="2-学习教程"><a href="#2-学习教程" class="headerlink" title="2. 学习教程"></a>2. 学习教程</h2><blockquote>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">Microsoft Learn 官方学习WSL教程</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/sandonz/article/details/120854876">sandonz 关于【WSL Ubuntu20.04 与其图形界面安装配置】</a> 应用该教程可以实现windows自带的远程桌面连接服务，虽然较为卡顿但是效果显著(这里注意一下 该教程的换源对于20.04来说特别好用，一定要及时更换该教程里的源，在我之前使用ubuntu22.04上就是换源问题一直困扰)</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41460654/article/details/118026986">董酷酷_Windows电脑如何开启CPU虚拟化</a></li>
-</ol>
-</blockquote>
-<h2 id="3-实践过程"><a href="#3-实践过程" class="headerlink" title="3.实践过程"></a>3.实践过程</h2><h3 id="3-0-基础设置"><a href="#3-0-基础设置" class="headerlink" title="3.0 基础设置"></a>3.0 基础设置</h3><blockquote>
-<p>在“开始”中搜索 启用或关闭windows功能<br><img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/%E5%90%AF%E7%94%A8%E6%88%96%E5%85%B3%E9%97%ADwindows%E5%8A%9F%E8%83%BD.png" srcset="/img/loading.gif" lazyload alt="启用或关闭windows功能"><br>将以下涉及到的选项全都点击选中，要注意Hyper-V可能无法全部选中，要在BIOS中修改开启CPU虚拟化功能，具体操作看<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41460654/article/details/118026986">董酷酷_Windows电脑如何开启CPU虚拟化</a>开启Hyper-V这一步很重要，如果不开启的话 后续就无法升级WSL2，会导致很多bug而且ROS2中的rviz2以及rqt_graph等就无法在windows界面上开启。（当然了，届时必须下载python Qt-5才可以打开这些界面)<img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%B9%B3%E5%8F%B0.png" srcset="/img/loading.gif" lazyload alt="虚拟机平台"><img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/%E9%80%82%E7%94%A8Linux%E7%9A%84Windows%E5%AD%90%E7%B3%BB%E7%BB%9F.png" srcset="/img/loading.gif" lazyload alt="适用Linux的Windows子系统"><br><img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/Windows%E8%99%9A%E6%8B%9F%E7%A8%8B%E5%BA%8F%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0.png" srcset="/img/loading.gif" lazyload alt="Windows虚拟程序监控平台"><br><img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/Hyper-V.png" srcset="/img/loading.gif" lazyload alt="Hyper-V"></p>
-</blockquote>
-<h3 id="3-1-下载安装windows-subsystem-for-Linux-wsl-和-ubuntu-20-04"><a href="#3-1-下载安装windows-subsystem-for-Linux-wsl-和-ubuntu-20-04" class="headerlink" title="3.1 下载安装windows subsystem for Linux (wsl) 和 ubuntu 20.04"></a>3.1 下载安装windows subsystem for Linux (wsl) 和 ubuntu 20.04</h3><h4 id="3-1-1"><a href="#3-1-1" class="headerlink" title="3.1.1"></a>3.1.1</h4><p>直接在PowerShell或者CMD里输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --intsall<br></code></pre></td></tr></table></figure>
-<p>输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --list --online <span class="hljs-comment">#查看可下载的Linux版本</span><br>wsl --install -d Ubuntu-xx.xx <span class="hljs-comment">#下载对应需要的Ubuntu版本，我选择熟悉的Ubuntu-22.04</span><br></code></pre></td></tr></table></figure>
-<p>也可以在应用商店里直接下载Ubuntu<br>下载完打开<code>Ubuntu20.04 </code>可能会出现一些错误，这个时候直接把<code>wsl</code>换成1，命令如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --set-version 1<br></code></pre></td></tr></table></figure>
-<p>，再打开<code>Ubuntu20.04</code>就会出现等待几分钟（Wait for a few minutes）<br>等到出现要求我们输入账号密码的时候就证明配置好了，相比起双系统 这种安装Ubuntu的方式真的快了很多倍。</p>
-<h3 id="3-2-将WSL更换为WSL2"><a href="#3-2-将WSL更换为WSL2" class="headerlink" title="3.2 将WSL更换为WSL2"></a>3.2 将WSL更换为WSL2</h3><blockquote>
-<p>PS:如果不打开Hpyer-V的所有选项，这一步是不能完成的，会导致以下几个问题：</p>
-<ol>
-<li>无法在<code>windows</code>界面上看到<code>rqt_graph</code>或者<code>rviz2</code>等可视化界面</li>
-<li>ROS的不同terminal之间的联系好像也断开了，本人尝试过在一个windows terminal标签页里打开<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py talker<br></code></pre></td></tr></table></figure>
-在另外一个标签页里打开<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py listener<br></code></pre></td></tr></table></figure>
-他们两个节点之间是没有通信的，而且<code>rqt_graph</code>也没有节点图<br>很简单，在打开Hyper-V后在<code>windows terminal</code>里改</li>
-</ol>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl -l -v<br>wsl --set-default-version 2<br><span class="hljs-comment">#或者针对某个Linux</span><br>wsl --set-version Ubuntu-xx.xx 2<br></code></pre></td></tr></table></figure>
-<h3 id="3-3-修改WSL2占用的内存，可以降低WSL出现蓝屏的可能"><a href="#3-3-修改WSL2占用的内存，可以降低WSL出现蓝屏的可能" class="headerlink" title="3.3 修改WSL2占用的内存，可以降低WSL出现蓝屏的可能"></a>3.3 修改WSL2占用的内存，可以降低WSL出现蓝屏的可能</h3><blockquote>
-<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/lian740930980/article/details/127638402#:~:text=%E8%A7%A3%E5%86%B3WSL2%E4%B8%ADVmmem%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E5%A4%A7%E9%97%AE%E9%A2%98%20%E6%95%99%E7%A8%8B%20%E8%B5%B7%E5%9B%A0%20Windows%20%E7%9A%84linux%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%9C%80%E5%A4%A7%20%E5%8D%A0%E7%94%A8%20%E5%8F%AF%E5%88%B0%E6%9C%AC%E6%9C%BA%E5%99%A8%E7%9A%8480%25%EF%BC%8C%E6%89%80%E4%BB%A5%E5%BF%85%E9%A1%BB%E9%99%90%E5%88%B6%E4%B8%80%E4%B8%8B%E5%AE%83%E7%9A%84%E6%80%A7%E8%83%BD%E6%9D%A5%E8%BE%BE%E5%88%B0%E4%BC%98%E5%8C%96%E7%9B%AE%E7%9A%84%20%E4%BC%98%E5%8C%96,%E5%86%85%E5%AD%98%20%E4%B8%8A%E9%99%90%EF%BC%8C%E8%BF%99%E9%87%8C%E6%88%91%E9%99%90%E5%88%B6%E6%9C%80%E5%A4%A72gb%EF%BC%8C%E5%8F%AF%E6%A0%B9%E6%8D%AE%E8%87%AA%E8%BA%AB%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%E8%AE%BE%E7%BD%AE%20%5B%20wsl2%20%5D%20memory%3D2GB%20swap%3D0%20localhostForwarding%3Dtrue">甜甜的初夏_解决WSL2中Vmmem内存占用过大问题
-</a></p>
-</blockquote>
-<h3 id="3-4-安装ROS-foxy"><a href="#3-4-安装ROS-foxy" class="headerlink" title="3.4 安装ROS foxy"></a>3.4 安装ROS foxy</h3><blockquote>
-<p>说在前头：由于我们在前面的工作中把源换好了接下来可以直接安装ROS了<br>最标准的安装方法直接参照ROS官网的安装方法<a target="_blank" rel="noopener" href="https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html">ROS foxy Installation</a><br>安装完毕后就可以尝试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py talker<br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py listener<br></code></pre></td></tr></table></figure></blockquote>
-
+<h3 id="1-使用Subscriber获取Sensor-msgs中的JointState"><a href="#1-使用Subscriber获取Sensor-msgs中的JointState" class="headerlink" title="1. 使用Subscriber获取Sensor_msgs中的JointState"></a>1. 使用Subscriber获取Sensor_msgs中的JointState</h3><h2 id="在最近的学习中，我注意到源代码Omni-cpp中的Publisher和Subscirber之间要通信，必须遵循”-Topic-名称一致”规律-例如注意到这个节点的名称是”joint-states”则Subscriber的代码必须是接收”joint-states”编译好之后我们会看到”joit-states”发送message给stateSubscriber-！-值得注意的是-stateSubscriber节点必须在大的Geomagic这个Group下，不然会出现stateSubscriber被排斥在外的情况，就像下图！我暂时还不知道为什么会出现这种情况，但是可以知道的是只要把stateSubscriber这个节点放到launch里面跟joint-states同一个Group就好了，就像这样值得注意的是-pkg-quot-xxx-quot-就是之前在创建这个功能包的时候的名字-gt-这次学习让我更深地学到了如何创建节点去监听消息，对后续重新创建一个UR5模型特别有意义！"><a href="#在最近的学习中，我注意到源代码Omni-cpp中的Publisher和Subscirber之间要通信，必须遵循”-Topic-名称一致”规律-例如注意到这个节点的名称是”joint-states”则Subscriber的代码必须是接收”joint-states”编译好之后我们会看到”joit-states”发送message给stateSubscriber-！-值得注意的是-stateSubscriber节点必须在大的Geomagic这个Group下，不然会出现stateSubscriber被排斥在外的情况，就像下图！我暂时还不知道为什么会出现这种情况，但是可以知道的是只要把stateSubscriber这个节点放到launch里面跟joint-states同一个Group就好了，就像这样值得注意的是-pkg-quot-xxx-quot-就是之前在创建这个功能包的时候的名字-gt-这次学习让我更深地学到了如何创建节点去监听消息，对后续重新创建一个UR5模型特别有意义！" class="headerlink" title="在最近的学习中，我注意到源代码Omni.cpp中的Publisher和Subscirber之间要通信，必须遵循”(Topic)名称一致”规律.例如注意到这个节点的名称是”joint_states”则Subscriber的代码必须是接收”joint_states”编译好之后我们会看到”joit_states”发送message给stateSubscriber ！- 值得注意的是:stateSubscriber节点必须在大的Geomagic这个Group下，不然会出现stateSubscriber被排斥在外的情况，就像下图！我暂时还不知道为什么会出现这种情况，但是可以知道的是只要把stateSubscriber这个节点放到launch里面跟joint_states同一个Group就好了，就像这样值得注意的是 pkg = &quot;xxx&quot;就是之前在创建这个功能包的时候的名字&gt;这次学习让我更深地学到了如何创建节点去监听消息，对后续重新创建一个UR5模型特别有意义！"></a>在最近的学习中，我注意到源代码Omni.cpp中的Publisher和Subscirber之间要通信，必须遵循”(Topic)名称一致”规律.<br>例如<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">...<br><span class="hljs-comment">/*************发布者代码端******************/</span><br>ros::Publisher joint_states;<br>joint_topic &lt;&lt; <span class="hljs-string">&quot;joint_states&quot;</span>;<br>joint_pub = n.<span class="hljs-built_in">advertise</span>&lt;sensor_msgs::JointState&gt;(joint_topic.<span class="hljs-built_in">str</span>(), <span class="hljs-number">1</span>);<br>...<br></code></pre></td></tr></table></figure><br>注意到这个节点的名称是”joint_states”<br>则Subscriber的代码必须是接收”joint_states”<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">...<br><span class="hljs-comment">/****************订阅者代码端***********************/</span><br>ros::Subscriber stateSubscriber = n.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;joint_states&quot;</span>, <span class="hljs-number">1</span> ,stateCallback);<br><span class="hljs-comment">//这里stateCallback是一个注册的回调函数，负责处理接收到的信息</span><br>...<br></code></pre></td></tr></table></figure><br>编译好之后我们会看到”joit_states”发送message给stateSubscriber ！<br><img src="/2022/03/05/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%80%EF%BC%89/stateSubscriber.png" srcset="/img/loading.gif" lazyload alt="正确的加入节点方式"><br>- <strong>值得注意的是:</strong><code>stateSubscriber</code>节点必须在大的<code>Geomagic</code>这个Group下，不然会出现<code>stateSubscriber</code>被排斥在外的情况，就像下图！<br><img src="/2022/03/05/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%80%EF%BC%89/stateSubscriber_2.png" srcset="/img/loading.gif" lazyload alt="仅加入节点"><br>我暂时还不知道为什么会出现这种情况，但是可以知道的是只要把stateSubscriber这个节点放到launch里面跟joint_states同一个Group就好了，就像这样<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs launch">&lt;launch&gt;<br>	&lt;arg name=&quot;device_name&quot; default = &quot;Geomagic1&quot;/&gt;<br>	&lt;param name = &quot;publish_rate&quot; type=&quot;int&quot; value = &quot;100&quot;/&gt;	<br>	&lt;group ns=&quot;$(arg device_name)&quot;&gt;<br>		&lt;node name = &quot;(arg device_name)&quot; pkg = &quot;geomagic_control&quot; type = &quot;omni&quot; output = &quot;screen&quot;&gt;<br>		...<br>		&lt;/node&gt;<br>		&lt;node name =&quot;omniSubscriber&quot; pkg = &quot;omniSubscriber&quot; type = &quot;omniSubscriber&quot; output = &quot;screen&quot;&gt;<br>		&lt;/node&gt;<br>	&lt;/group&gt;<br>&lt;/launch&gt;<br></code></pre></td></tr></table></figure><br><strong>值得注意的是</strong> <code>pkg = &quot;xxx&quot;</code>就是之前在创建这个功能包的时候的名字<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make &lt;pkg_name&gt; depend_1 depend_2 .......<br></code></pre></td></tr></table></figure><br>&gt;这次学习让我更深地学到了如何创建节点去监听消息，对后续重新创建一个UR5模型特别有意义！</h2>
                 
               </div>
             
@@ -335,7 +296,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/WSL-WSL2/">#WSL/WSL2</a>
+        <a href="/tags/ROS/">#ROS</a>
       
     </div>
   
@@ -347,8 +308,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化</div>
-      <div>http://example.com/2023/03/28/【WSL2学习日志】实现Ubuntu20.04 ROS2(foxy)在win1下的WSL2虚拟化/</div>
+      <div>【ROS学习记录】（一）</div>
+      <div>http://example.com/2022/03/05/【ROS学习记录】（一）/</div>
     </div>
     <div class="license-meta">
       
@@ -360,7 +321,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月28日</div>
+          <div>2022年3月5日</div>
         </div>
       
       
@@ -392,15 +353,15 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/" title="【ROS学习记录】（二）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【ROS学习记录】（二）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2023/03/27/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8C%87%E5%8D%97%E5%8F%8A%E9%81%BF%E5%9D%91/" title="【Blog】搭建个人静态博客指南及避坑">
-                        <span class="hidden-mobile">【Blog】搭建个人静态博客指南及避坑</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>

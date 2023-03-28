@@ -14,7 +14,7 @@
     
     <tags>
       
-      <tag>blog</tag>
+      <tag>WSL/WSL2</tag>
       
     </tags>
     
@@ -53,6 +53,101 @@
     <tags>
       
       <tag>PyQt5</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【ROS学习记录】（五）Win版ROS/Noetic 如何添加必要的依赖(rosdep)</title>
+    <link href="/2022/08/27/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89/"/>
+    <url>/2022/08/27/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89/</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>近期为了使得更多的设备可以连入ROS，开始转向Windows平台的ROS，遇到一些问题</p><ol><li>无法编译问题，如何解决，参考<a href="https://blog.csdn.net/qq_36651243/article/details/115689930]">CSDN:离歌漠</a>,的文章，下载Ninja到系统变量中</li><li>编译出现依赖项无法下载的问题，将在下述文章中详细阐述</li></ol></blockquote><h3 id="编译出现依赖项无法下载的问题"><a href="#编译出现依赖项无法下载的问题" class="headerlink" title="编译出现依赖项无法下载的问题"></a>编译出现依赖项无法下载的问题</h3><p>我们在使用ROS编译的过程中可能会出现这样的问题</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Could not find a package configuration file provided by<br> <span class="hljs-string">&quot;industrial_robot_status_interface&quot;</span> with any of the following names:<br></code></pre></td></tr></table></figure><p><img src="https://img-blog.csdnimg.cn/d71fb9212c67470db62394413fca11a5.png" alt="依赖需要重新下载"><br>在Ubuntu上可以很简单的解决这种依赖找不到的问题，参考<a href="https://blog.csdn.net/gyxx1998/article/details/118153079">CSDN:冰激凌啊</a>，</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install ros-melodic-ur-client-library<br></code></pre></td></tr></table></figure><p>但是在windows上我们只能用git 或者 chocolate，因此我到处找教程发现可以自行下载git包后用rosdep进行导入，参考<a href="https://github.com/gavanderhoorn/industrial_robot_status_controller">GitHub:gavanderhoorn&#x2F;industrial_robot_status_controller</a><br><img src="https://img-blog.csdnimg.cn/27efdffc815046369b10d3506cc6e58b.png" alt="在这里插入图片描述"></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt; git -C catkin_ws/src <span class="hljs-built_in">clone</span> https://github.com/gavanderhoorn/industrial_robot_status_controller.git<br>&gt; <span class="hljs-comment">#如果不行就直接下载解压到src</span><br>&gt; rosdep update<br>&gt; rosdep install --from-paths src -i<br>&gt; <span class="hljs-built_in">cd</span> catkin_ws<br></code></pre></td></tr></table></figure><p>这样子Windows下的rosdep问题就可以解决了</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ROS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【ROS学习记录】（四）关于“ROS中订阅subscribe 多个话题并汇聚回调信息处理”以及“UR5 接收关节信息”的学习记录</title>
+    <link href="/2022/07/20/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%9B%9B%EF%BC%89/"/>
+    <url>/2022/07/20/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、ROS中订阅subscribe-多个话题并汇聚回调信息处理"><a href="#一、ROS中订阅subscribe-多个话题并汇聚回调信息处理" class="headerlink" title="一、ROS中订阅subscribe 多个话题并汇聚回调信息处理"></a>一、ROS中订阅subscribe 多个话题并汇聚回调信息处理</h2><blockquote><ul><li>在学习的过程中，我需要用到多个订阅内容集合到单个函数中进行处理的操作。</li><li>但是一般网络上的订阅方式是没有回调参数的，于是我走了很多歪路，例如</li></ul><ol><li>获取内存地址并用python中的ctypes，进行一个地址内容抽取，参考<a href="https://www.cnblogs.com/pfeiliu/p/12129187.html#:~:text=%E5%9C%A8python%E4%B8%AD%EF%BC%8C%E9%80%9A%E8%BF%87id%E8%8E%B7%E5%8F%96%E5%8F%98%E9%87%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%EF%BC%8C%E9%82%A3%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%91%A2%EF%BC%9F%20import%20ctypes%20value%20%3D%20%27hello%20world%27%20%23,%3D%20ctypes.cast%20%28address%2C%20ctypes.py_object%29.value%20%23%20%E8%AF%BB%E5%8F%96%E5%9C%B0%E5%9D%80%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%20print%20%28address%2Cget_value%29">《python通过内存地址获取数据》</a>），但是效果很差，估计是ROS本身封装的很严所以一般的抽取内存数据的方式不可用；</li><li>调取rospy.topics.Subscriber***函数里的方法，也是无法解决这个问题: <img src="/2022/07/20/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%9B%9B%EF%BC%89/Subscriber%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98.png" alt="Subscriber无法解决问题.png"><br>于是我开启了面向搜索引擎编程，发现这个两个教程<br>(1) <a href="https://blog.csdn.net/muyiyushan/article/details/118418040">利用message_filter进行多传感器时间同步</a><br>(2) <a href="https://blog.csdn.net/chishuideyu/article/details/77479758">ROS官方教程[翻译]—message_filter的使用</a></li></ol></blockquote><p>附上代码示例：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> message_filters<br><span class="hljs-comment">#---------------------订阅----------------------</span><br>sub1 = message_filters.Subscriber(<span class="hljs-string">&#x27;/topic1&#x27;</span> , msg) <br><span class="hljs-comment">#message_filters.Subscriber 跟rospy.Subscriber 一样需要传入的函数</span><br>sub2= message_filters.Subscriber(<span class="hljs-string">&#x27;/topic2&#x27;</span> , msg) <br><br><span class="hljs-comment">#---------------------集合-----------------------</span><br>ts = message_filters.TimeSynchronizer([sub1,sub2],<span class="hljs-number">1</span>)<br>ts.registerCallback( 要传入的函数 )<br><span class="hljs-comment">#---------------------END----------------------</span><br></code></pre></td></tr></table></figure><p>以上仅为使用模板topic 的选择还得看用户</p><h2 id="二、UR5-接收关节信息"><a href="#二、UR5-接收关节信息" class="headerlink" title="二、UR5 接收关节信息"></a>二、UR5 接收关节信息</h2><blockquote><p>在实验的过程中，我希望收集UR5机械臂的关节信息，但是当我把 订阅rospy.Subscriber() 函数放在执行UR5控制（运动）的函数前面时会出现无法进入下一个函数的情况，在查阅很多网络资料后发现<a href="https://www.daimajiaoliu.com/daima/56971f320bc6c00">未知作者操作UR5机械臂</a>一文中出现了一句话<img src="/2022/07/20/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%9B%9B%EF%BC%89/topic.png" alt="topic.png"><br>也就是说<strong>必须UR5机械臂有出现关节变化时该订阅才会生效</strong>，因此必须让机械臂动起来或者把订阅消息的程序放在机械臂控制运动的函数之后</p></blockquote><p>附上示例代码</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">rospy.Subscriber(<span class="hljs-string">&#x27;/joint_states&#x27;</span>,JointState,getUR5State)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getUR5State</span>:<br>UR5state = state.position<br>    rospy.loginfo(UR5state)<br></code></pre></td></tr></table></figure><p>通过这一年的学习算是对强大的ROS系统有了浅薄的了解，但还有很多地方需要学习，例如 **”把所有的节点放到一个Lanuch里” 或者”做成一个Qt可视化界面”**，以及接入力传感器数据等等更多的挑战需要去面对</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ROS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【ROS学习记录】（三）关于ROS控制真实UR5以及手柄(joystick)控制仿真UR5</title>
+    <link href="/2022/05/08/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%89%EF%BC%89/"/>
+    <url>/2022/05/08/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    
+    <content type="html"><![CDATA[<h2 id="关于ROS控制真实UR5以及手柄-joystick-控制仿真UR5学习进程"><a href="#关于ROS控制真实UR5以及手柄-joystick-控制仿真UR5学习进程" class="headerlink" title="关于ROS控制真实UR5以及手柄(joystick)控制仿真UR5学习进程"></a>关于ROS控制真实UR5以及手柄(joystick)控制仿真UR5学习进程</h2><h4 id="一、ROS控制真实UR5进程"><a href="#一、ROS控制真实UR5进程" class="headerlink" title="一、ROS控制真实UR5进程"></a>一、ROS控制真实UR5进程</h4><ol><li>UR5通过控制器同步实时状态可以实现但是无法进行movit!控制</li><li>因为版本迭代导致ur_morden_driver不可用，因此RAIN(<a href="https://github.com/inmo-jang/rain_teleoperation/blob/master/xbox_teleop.md">Inmo Jang</a>)的代码无法用要重新调试<br><img src="/2022/05/08/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%89%EF%BC%89/%E9%97%AE%E9%A2%98.png" alt="问题"></li></ol><h4 id="二、手柄-joystick-控制仿真UR5学习进程"><a href="#二、手柄-joystick-控制仿真UR5学习进程" class="headerlink" title="二、手柄(joystick)控制仿真UR5学习进程"></a>二、手柄(joystick)控制仿真UR5学习进程</h4><ol><li>利用<a href="https://github.com/inmo-jang/rain_teleoperation/blob/master/xbox_teleop.md">Inmo Jang</a>的代码已经可以实现gazebo控制，但是gazebo里的UR5有时候还是会抽搐，可能是因为Joystick没有接替控制权</li><li>下一步是手柄控制UR5之后用Phantom控制！</li></ol>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ROS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【ROS学习记录】（二）</title>
+    <link href="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <url>/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    
+    <content type="html"><![CDATA[<h1 id="【ROS】抓紧记录学习动态（二）"><a href="#【ROS】抓紧记录学习动态（二）" class="headerlink" title="【ROS】抓紧记录学习动态（二）"></a>【ROS】抓紧记录学习动态（二）</h1><blockquote><p>上回【ROS】（一）我已经可以通过Subscriber获取Sensor_msgs里publish的信息了，这回我直接想把<a href="https://github.com/sunghowoo/Control-of-two-UR5s-by-two-phantom-omnies-">sunghowoo</a>小哥的summer_gazebo给复现。其实模型方面是没问题的，但是在launch的时候老是有问题，我查了一下是<code>robot_state_publisher</code>没有接收到消息……</p></blockquote><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>在我把资源都放好以后，出现了这样的问题<img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98.png" alt="出现问题"></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">.....<br>[ERROR] [xxx]:Error document empty.<br>[robot_state_publisher-5] process has died<br>.....<br></code></pre></td></tr></table></figure><p>很是苦恼，于是我上ROS_Wiki![rosnode_ping](rosnode ping.png)<br>搜了一下找到了这个<a href="http://wiki.ros.org/robot_state_publisher/Troubleshooting#:~:text=By%20default%20the%20robot%20state%20publisher%20looks%20for,and%20therefore%20does%20not%20have%20a%20root%20link.">robot_state_publisher&#x2F;Troubleshooting</a><br><img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/TroubleShooting.png" alt="TroubleShooting"><br>我尝试了一下<code>$rosnode ping robot_state_publisher</code>因为这个process已经died了所以肯定是没有反应的<img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/process_died.png" alt="process_died.png"><br>又尝试了一下<code>$rostopic hz joint_states</code>出现了<br><img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/joint_states%E5%87%BA%E7%8E%B0.png" alt="joint_states出现.png"><br>也就是说<code>joint_states</code>没有发布关节状态</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ROS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【ROS学习记录】（一）</title>
+    <link href="/2022/03/05/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <url>/2022/03/05/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    
+    <content type="html"><![CDATA[<h1 id="【ROS学习记录】（一）"><a href="#【ROS学习记录】（一）" class="headerlink" title="【ROS学习记录】（一）"></a>【ROS学习记录】（一）</h1><blockquote><p>由于github上开源的关于PhantomOmni-UR5的源代码在本电脑上复现出现不少问题，这么修也办法成功（主要是也想好好的学一下如何控制ROS系统），于是我决定从头开始，认真学习ROS系统框架<br>最近学习的主要是<br>如何使用ROS系统自带的Topic？<br>如何使用Publish和Subscriber？<br>如何使用Launch文件？<br>以及以上的一些小细节。</p></blockquote><h3 id="1-使用Subscriber获取Sensor-msgs中的JointState"><a href="#1-使用Subscriber获取Sensor-msgs中的JointState" class="headerlink" title="1. 使用Subscriber获取Sensor_msgs中的JointState"></a>1. 使用Subscriber获取Sensor_msgs中的JointState</h3><h2 id="在最近的学习中，我注意到源代码Omni-cpp中的Publisher和Subscirber之间要通信，必须遵循”-Topic-名称一致”规律-例如注意到这个节点的名称是”joint-states”则Subscriber的代码必须是接收”joint-states”编译好之后我们会看到”joit-states”发送message给stateSubscriber-！-值得注意的是-stateSubscriber节点必须在大的Geomagic这个Group下，不然会出现stateSubscriber被排斥在外的情况，就像下图！我暂时还不知道为什么会出现这种情况，但是可以知道的是只要把stateSubscriber这个节点放到launch里面跟joint-states同一个Group就好了，就像这样值得注意的是-pkg-quot-xxx-quot-就是之前在创建这个功能包的时候的名字-gt-这次学习让我更深地学到了如何创建节点去监听消息，对后续重新创建一个UR5模型特别有意义！"><a href="#在最近的学习中，我注意到源代码Omni-cpp中的Publisher和Subscirber之间要通信，必须遵循”-Topic-名称一致”规律-例如注意到这个节点的名称是”joint-states”则Subscriber的代码必须是接收”joint-states”编译好之后我们会看到”joit-states”发送message给stateSubscriber-！-值得注意的是-stateSubscriber节点必须在大的Geomagic这个Group下，不然会出现stateSubscriber被排斥在外的情况，就像下图！我暂时还不知道为什么会出现这种情况，但是可以知道的是只要把stateSubscriber这个节点放到launch里面跟joint-states同一个Group就好了，就像这样值得注意的是-pkg-quot-xxx-quot-就是之前在创建这个功能包的时候的名字-gt-这次学习让我更深地学到了如何创建节点去监听消息，对后续重新创建一个UR5模型特别有意义！" class="headerlink" title="在最近的学习中，我注意到源代码Omni.cpp中的Publisher和Subscirber之间要通信，必须遵循”(Topic)名称一致”规律.例如注意到这个节点的名称是”joint_states”则Subscriber的代码必须是接收”joint_states”编译好之后我们会看到”joit_states”发送message给stateSubscriber ！- 值得注意的是:stateSubscriber节点必须在大的Geomagic这个Group下，不然会出现stateSubscriber被排斥在外的情况，就像下图！我暂时还不知道为什么会出现这种情况，但是可以知道的是只要把stateSubscriber这个节点放到launch里面跟joint_states同一个Group就好了，就像这样值得注意的是 pkg = &quot;xxx&quot;就是之前在创建这个功能包的时候的名字&gt;这次学习让我更深地学到了如何创建节点去监听消息，对后续重新创建一个UR5模型特别有意义！"></a>在最近的学习中，我注意到源代码Omni.cpp中的Publisher和Subscirber之间要通信，必须遵循”(Topic)名称一致”规律.<br>例如<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">...<br><span class="hljs-comment">/*************发布者代码端******************/</span><br>ros::Publisher joint_states;<br>joint_topic &lt;&lt; <span class="hljs-string">&quot;joint_states&quot;</span>;<br>joint_pub = n.<span class="hljs-built_in">advertise</span>&lt;sensor_msgs::JointState&gt;(joint_topic.<span class="hljs-built_in">str</span>(), <span class="hljs-number">1</span>);<br>...<br></code></pre></td></tr></table></figure><br>注意到这个节点的名称是”joint_states”<br>则Subscriber的代码必须是接收”joint_states”<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">...<br><span class="hljs-comment">/****************订阅者代码端***********************/</span><br>ros::Subscriber stateSubscriber = n.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;joint_states&quot;</span>, <span class="hljs-number">1</span> ,stateCallback);<br><span class="hljs-comment">//这里stateCallback是一个注册的回调函数，负责处理接收到的信息</span><br>...<br></code></pre></td></tr></table></figure><br>编译好之后我们会看到”joit_states”发送message给stateSubscriber ！<br><img src="/2022/03/05/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%80%EF%BC%89/stateSubscriber.png" alt="正确的加入节点方式"><br>- <strong>值得注意的是:</strong><code>stateSubscriber</code>节点必须在大的<code>Geomagic</code>这个Group下，不然会出现<code>stateSubscriber</code>被排斥在外的情况，就像下图！<br><img src="/2022/03/05/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%80%EF%BC%89/stateSubscriber_2.png" alt="仅加入节点"><br>我暂时还不知道为什么会出现这种情况，但是可以知道的是只要把stateSubscriber这个节点放到launch里面跟joint_states同一个Group就好了，就像这样<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs launch">&lt;launch&gt;<br>&lt;arg name=&quot;device_name&quot; default = &quot;Geomagic1&quot;/&gt;<br>&lt;param name = &quot;publish_rate&quot; type=&quot;int&quot; value = &quot;100&quot;/&gt;<br>&lt;group ns=&quot;$(arg device_name)&quot;&gt;<br>&lt;node name = &quot;(arg device_name)&quot; pkg = &quot;geomagic_control&quot; type = &quot;omni&quot; output = &quot;screen&quot;&gt;<br>...<br>&lt;/node&gt;<br>&lt;node name =&quot;omniSubscriber&quot; pkg = &quot;omniSubscriber&quot; type = &quot;omniSubscriber&quot; output = &quot;screen&quot;&gt;<br>&lt;/node&gt;<br>&lt;/group&gt;<br>&lt;/launch&gt;<br></code></pre></td></tr></table></figure><br><strong>值得注意的是</strong> <code>pkg = &quot;xxx&quot;</code>就是之前在创建这个功能包的时候的名字<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make &lt;pkg_name&gt; depend_1 depend_2 .......<br></code></pre></td></tr></table></figure><br>&gt;这次学习让我更深地学到了如何创建节点去监听消息，对后续重新创建一个UR5模型特别有意义！</h2>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ROS</tag>
       
     </tags>
     

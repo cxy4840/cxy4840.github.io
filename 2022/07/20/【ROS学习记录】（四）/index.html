@@ -16,24 +16,24 @@
   <meta name="author" content="Xiaoyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一. 为什么使用WSL2虚拟而不是VMware 或者 Orical Virtualbox 因为这个VMware不够轻量化 Vmware无法调用显卡配置，而在我的项目中需要用独立显卡来渲染gazebo  二. 如何实现1. 硬件配置要求 windows11 或者 windows 10 版本 2004 及更高版本（内部版本 19041 及更高版本）  2. 学习教程  Microsoft Learn">
+    <meta name="description" content="一、ROS中订阅subscribe 多个话题并汇聚回调信息处理  在学习的过程中，我需要用到多个订阅内容集合到单个函数中进行处理的操作。 但是一般网络上的订阅方式是没有回调参数的，于是我走了很多歪路，例如   获取内存地址并用python中的ctypes，进行一个地址内容抽取，参考《python通过内存地址获取数据》），但是效果很差，估计是ROS本身封装的很严所以一般的抽取内存数据的方式不可用；">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化">
-<meta property="og:url" content="http://example.com/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/index.html">
+<meta property="og:title" content="【ROS学习记录】（四）关于“ROS中订阅subscribe 多个话题并汇聚回调信息处理”以及“UR5 接收关节信息”的学习记录">
+<meta property="og:url" content="http://example.com/2022/07/20/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Xiaoyu&#39;s Blog">
-<meta property="og:description" content="一. 为什么使用WSL2虚拟而不是VMware 或者 Orical Virtualbox 因为这个VMware不够轻量化 Vmware无法调用显卡配置，而在我的项目中需要用独立显卡来渲染gazebo  二. 如何实现1. 硬件配置要求 windows11 或者 windows 10 版本 2004 及更高版本（内部版本 19041 及更高版本）  2. 学习教程  Microsoft Learn">
+<meta property="og:description" content="一、ROS中订阅subscribe 多个话题并汇聚回调信息处理  在学习的过程中，我需要用到多个订阅内容集合到单个函数中进行处理的操作。 但是一般网络上的订阅方式是没有回调参数的，于是我走了很多歪路，例如   获取内存地址并用python中的ctypes，进行一个地址内容抽取，参考《python通过内存地址获取数据》），但是效果很差，估计是ROS本身封装的很严所以一般的抽取内存数据的方式不可用；">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/MoonAndFlower.JPG">
-<meta property="article:published_time" content="2023-03-28T03:07:28.278Z">
-<meta property="article:modified_time" content="2023-03-28T08:01:28.165Z">
+<meta property="og:image" content="http://example.com/img/Ros_logo.png">
+<meta property="article:published_time" content="2022-07-20T13:56:38.000Z">
+<meta property="article:modified_time" content="2023-03-28T08:55:12.148Z">
 <meta property="article:author" content="Xiaoyu">
-<meta property="article:tag" content="WSL&#x2F;WSL2">
+<meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/MoonAndFlower.JPG">
+<meta name="twitter:image" content="http://example.com/img/Ros_logo.png">
   
   
   
-  <title>【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化 - Xiaoyu&#39;s Blog</title>
+  <title>【ROS学习记录】（四）关于“ROS中订阅subscribe 多个话题并汇聚回调信息处理”以及“UR5 接收关节信息”的学习记录 - Xiaoyu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,13 +197,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/MoonAndFlower.JPG') no-repeat center center; background-size: cover;">
+     style="background: url('/img/Ros_logo.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化"></span>
+            <span id="subtitle" data-typed-text="【ROS学习记录】（四）关于“ROS中订阅subscribe 多个话题并汇聚回调信息处理”以及“UR5 接收关节信息”的学习记录"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-28 11:07" pubdate>
-          2023年3月28日 上午
+        <time datetime="2022-07-20 21:56" pubdate>
+          2022年7月20日 晚上
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          1.2k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          14 分钟
+          10 分钟
         
       </span>
     
@@ -276,53 +276,30 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化</h1>
+            <h1 style="display: none">【ROS学习记录】（四）关于“ROS中订阅subscribe 多个话题并汇聚回调信息处理”以及“UR5 接收关节信息”的学习记录</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="一-为什么使用WSL2虚拟而不是VMware-或者-Orical-Virtualbox"><a href="#一-为什么使用WSL2虚拟而不是VMware-或者-Orical-Virtualbox" class="headerlink" title="一. 为什么使用WSL2虚拟而不是VMware 或者 Orical Virtualbox"></a>一. 为什么使用WSL2虚拟而不是VMware 或者 Orical Virtualbox</h1><ol>
-<li>因为这个VMware不够轻量化</li>
-<li>Vmware无法调用显卡配置，而在我的项目中需要用独立显卡来渲染gazebo</li>
-</ol>
-<h1 id="二-如何实现"><a href="#二-如何实现" class="headerlink" title="二. 如何实现"></a>二. 如何实现</h1><h2 id="1-硬件配置要求"><a href="#1-硬件配置要求" class="headerlink" title="1. 硬件配置要求"></a>1. 硬件配置要求</h2><blockquote>
-<p>windows11 或者 windows 10 版本 2004 及更高版本（内部版本 19041 及更高版本）</p>
-</blockquote>
-<h2 id="2-学习教程"><a href="#2-学习教程" class="headerlink" title="2. 学习教程"></a>2. 学习教程</h2><blockquote>
+                <h2 id="一、ROS中订阅subscribe-多个话题并汇聚回调信息处理"><a href="#一、ROS中订阅subscribe-多个话题并汇聚回调信息处理" class="headerlink" title="一、ROS中订阅subscribe 多个话题并汇聚回调信息处理"></a>一、ROS中订阅subscribe 多个话题并汇聚回调信息处理</h2><blockquote>
+<ul>
+<li>在学习的过程中，我需要用到多个订阅内容集合到单个函数中进行处理的操作。</li>
+<li>但是一般网络上的订阅方式是没有回调参数的，于是我走了很多歪路，例如</li>
+</ul>
 <ol>
-<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">Microsoft Learn 官方学习WSL教程</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/sandonz/article/details/120854876">sandonz 关于【WSL Ubuntu20.04 与其图形界面安装配置】</a> 应用该教程可以实现windows自带的远程桌面连接服务，虽然较为卡顿但是效果显著(这里注意一下 该教程的换源对于20.04来说特别好用，一定要及时更换该教程里的源，在我之前使用ubuntu22.04上就是换源问题一直困扰)</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41460654/article/details/118026986">董酷酷_Windows电脑如何开启CPU虚拟化</a></li>
+<li>获取内存地址并用python中的ctypes，进行一个地址内容抽取，参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/pfeiliu/p/12129187.html#:~:text=%E5%9C%A8python%E4%B8%AD%EF%BC%8C%E9%80%9A%E8%BF%87id%E8%8E%B7%E5%8F%96%E5%8F%98%E9%87%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%EF%BC%8C%E9%82%A3%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%91%A2%EF%BC%9F%20import%20ctypes%20value%20%3D%20%27hello%20world%27%20%23,%3D%20ctypes.cast%20%28address%2C%20ctypes.py_object%29.value%20%23%20%E8%AF%BB%E5%8F%96%E5%9C%B0%E5%9D%80%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%20print%20%28address%2Cget_value%29">《python通过内存地址获取数据》</a>），但是效果很差，估计是ROS本身封装的很严所以一般的抽取内存数据的方式不可用；</li>
+<li>调取rospy.topics.Subscriber***函数里的方法，也是无法解决这个问题: <img src="/2022/07/20/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%9B%9B%EF%BC%89/Subscriber%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="Subscriber无法解决问题.png"><br>于是我开启了面向搜索引擎编程，发现这个两个教程<br>(1) <a target="_blank" rel="noopener" href="https://blog.csdn.net/muyiyushan/article/details/118418040">利用message_filter进行多传感器时间同步</a><br>(2) <a target="_blank" rel="noopener" href="https://blog.csdn.net/chishuideyu/article/details/77479758">ROS官方教程[翻译]—message_filter的使用</a></li>
 </ol>
 </blockquote>
-<h2 id="3-实践过程"><a href="#3-实践过程" class="headerlink" title="3.实践过程"></a>3.实践过程</h2><h3 id="3-0-基础设置"><a href="#3-0-基础设置" class="headerlink" title="3.0 基础设置"></a>3.0 基础设置</h3><blockquote>
-<p>在“开始”中搜索 启用或关闭windows功能<br><img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/%E5%90%AF%E7%94%A8%E6%88%96%E5%85%B3%E9%97%ADwindows%E5%8A%9F%E8%83%BD.png" srcset="/img/loading.gif" lazyload alt="启用或关闭windows功能"><br>将以下涉及到的选项全都点击选中，要注意Hyper-V可能无法全部选中，要在BIOS中修改开启CPU虚拟化功能，具体操作看<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41460654/article/details/118026986">董酷酷_Windows电脑如何开启CPU虚拟化</a>开启Hyper-V这一步很重要，如果不开启的话 后续就无法升级WSL2，会导致很多bug而且ROS2中的rviz2以及rqt_graph等就无法在windows界面上开启。（当然了，届时必须下载python Qt-5才可以打开这些界面)<img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%B9%B3%E5%8F%B0.png" srcset="/img/loading.gif" lazyload alt="虚拟机平台"><img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/%E9%80%82%E7%94%A8Linux%E7%9A%84Windows%E5%AD%90%E7%B3%BB%E7%BB%9F.png" srcset="/img/loading.gif" lazyload alt="适用Linux的Windows子系统"><br><img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/Windows%E8%99%9A%E6%8B%9F%E7%A8%8B%E5%BA%8F%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0.png" srcset="/img/loading.gif" lazyload alt="Windows虚拟程序监控平台"><br><img src="/2023/03/28/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/Hyper-V.png" srcset="/img/loading.gif" lazyload alt="Hyper-V"></p>
+<p>附上代码示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> message_filters<br><span class="hljs-comment">#---------------------订阅----------------------</span><br>sub1 	= message_filters.Subscriber(<span class="hljs-string">&#x27;/topic1&#x27;</span> , msg) <br><span class="hljs-comment">#message_filters.Subscriber 跟rospy.Subscriber 一样需要传入的函数</span><br>sub2	= message_filters.Subscriber(<span class="hljs-string">&#x27;/topic2&#x27;</span> , msg) <br><br><span class="hljs-comment">#---------------------集合-----------------------</span><br>ts = message_filters.TimeSynchronizer([sub1,sub2],<span class="hljs-number">1</span>)<br>ts.registerCallback( 要传入的函数 )<br><span class="hljs-comment">#---------------------END----------------------</span><br></code></pre></td></tr></table></figure>
+<p>以上仅为使用模板topic 的选择还得看用户</p>
+<h2 id="二、UR5-接收关节信息"><a href="#二、UR5-接收关节信息" class="headerlink" title="二、UR5 接收关节信息"></a>二、UR5 接收关节信息</h2><blockquote>
+<p>在实验的过程中，我希望收集UR5机械臂的关节信息，但是当我把 订阅rospy.Subscriber() 函数放在执行UR5控制（运动）的函数前面时会出现无法进入下一个函数的情况，在查阅很多网络资料后发现<a target="_blank" rel="noopener" href="https://www.daimajiaoliu.com/daima/56971f320bc6c00">未知作者操作UR5机械臂</a>一文中出现了一句话<img src="/2022/07/20/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%9B%9B%EF%BC%89/topic.png" srcset="/img/loading.gif" lazyload alt="topic.png"><br>也就是说<strong>必须UR5机械臂有出现关节变化时该订阅才会生效</strong>，因此必须让机械臂动起来或者把订阅消息的程序放在机械臂控制运动的函数之后</p>
 </blockquote>
-<h3 id="3-1-下载安装windows-subsystem-for-Linux-wsl-和-ubuntu-20-04"><a href="#3-1-下载安装windows-subsystem-for-Linux-wsl-和-ubuntu-20-04" class="headerlink" title="3.1 下载安装windows subsystem for Linux (wsl) 和 ubuntu 20.04"></a>3.1 下载安装windows subsystem for Linux (wsl) 和 ubuntu 20.04</h3><h4 id="3-1-1"><a href="#3-1-1" class="headerlink" title="3.1.1"></a>3.1.1</h4><p>直接在PowerShell或者CMD里输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --intsall<br></code></pre></td></tr></table></figure>
-<p>输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --list --online <span class="hljs-comment">#查看可下载的Linux版本</span><br>wsl --install -d Ubuntu-xx.xx <span class="hljs-comment">#下载对应需要的Ubuntu版本，我选择熟悉的Ubuntu-22.04</span><br></code></pre></td></tr></table></figure>
-<p>也可以在应用商店里直接下载Ubuntu<br>下载完打开<code>Ubuntu20.04 </code>可能会出现一些错误，这个时候直接把<code>wsl</code>换成1，命令如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --set-version 1<br></code></pre></td></tr></table></figure>
-<p>，再打开<code>Ubuntu20.04</code>就会出现等待几分钟（Wait for a few minutes）<br>等到出现要求我们输入账号密码的时候就证明配置好了，相比起双系统 这种安装Ubuntu的方式真的快了很多倍。</p>
-<h3 id="3-2-将WSL更换为WSL2"><a href="#3-2-将WSL更换为WSL2" class="headerlink" title="3.2 将WSL更换为WSL2"></a>3.2 将WSL更换为WSL2</h3><blockquote>
-<p>PS:如果不打开Hpyer-V的所有选项，这一步是不能完成的，会导致以下几个问题：</p>
-<ol>
-<li>无法在<code>windows</code>界面上看到<code>rqt_graph</code>或者<code>rviz2</code>等可视化界面</li>
-<li>ROS的不同terminal之间的联系好像也断开了，本人尝试过在一个windows terminal标签页里打开<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py talker<br></code></pre></td></tr></table></figure>
-在另外一个标签页里打开<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py listener<br></code></pre></td></tr></table></figure>
-他们两个节点之间是没有通信的，而且<code>rqt_graph</code>也没有节点图<br>很简单，在打开Hyper-V后在<code>windows terminal</code>里改</li>
-</ol>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl -l -v<br>wsl --set-default-version 2<br><span class="hljs-comment">#或者针对某个Linux</span><br>wsl --set-version Ubuntu-xx.xx 2<br></code></pre></td></tr></table></figure>
-<h3 id="3-3-修改WSL2占用的内存，可以降低WSL出现蓝屏的可能"><a href="#3-3-修改WSL2占用的内存，可以降低WSL出现蓝屏的可能" class="headerlink" title="3.3 修改WSL2占用的内存，可以降低WSL出现蓝屏的可能"></a>3.3 修改WSL2占用的内存，可以降低WSL出现蓝屏的可能</h3><blockquote>
-<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/lian740930980/article/details/127638402#:~:text=%E8%A7%A3%E5%86%B3WSL2%E4%B8%ADVmmem%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E5%A4%A7%E9%97%AE%E9%A2%98%20%E6%95%99%E7%A8%8B%20%E8%B5%B7%E5%9B%A0%20Windows%20%E7%9A%84linux%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%9C%80%E5%A4%A7%20%E5%8D%A0%E7%94%A8%20%E5%8F%AF%E5%88%B0%E6%9C%AC%E6%9C%BA%E5%99%A8%E7%9A%8480%25%EF%BC%8C%E6%89%80%E4%BB%A5%E5%BF%85%E9%A1%BB%E9%99%90%E5%88%B6%E4%B8%80%E4%B8%8B%E5%AE%83%E7%9A%84%E6%80%A7%E8%83%BD%E6%9D%A5%E8%BE%BE%E5%88%B0%E4%BC%98%E5%8C%96%E7%9B%AE%E7%9A%84%20%E4%BC%98%E5%8C%96,%E5%86%85%E5%AD%98%20%E4%B8%8A%E9%99%90%EF%BC%8C%E8%BF%99%E9%87%8C%E6%88%91%E9%99%90%E5%88%B6%E6%9C%80%E5%A4%A72gb%EF%BC%8C%E5%8F%AF%E6%A0%B9%E6%8D%AE%E8%87%AA%E8%BA%AB%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%E8%AE%BE%E7%BD%AE%20%5B%20wsl2%20%5D%20memory%3D2GB%20swap%3D0%20localhostForwarding%3Dtrue">甜甜的初夏_解决WSL2中Vmmem内存占用过大问题
-</a></p>
-</blockquote>
-<h3 id="3-4-安装ROS-foxy"><a href="#3-4-安装ROS-foxy" class="headerlink" title="3.4 安装ROS foxy"></a>3.4 安装ROS foxy</h3><blockquote>
-<p>说在前头：由于我们在前面的工作中把源换好了接下来可以直接安装ROS了<br>最标准的安装方法直接参照ROS官网的安装方法<a target="_blank" rel="noopener" href="https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html">ROS foxy Installation</a><br>安装完毕后就可以尝试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py talker<br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py listener<br></code></pre></td></tr></table></figure></blockquote>
+<p>附上示例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">rospy.Subscriber(<span class="hljs-string">&#x27;/joint_states&#x27;</span>,JointState,getUR5State)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getUR5State</span>:<br>	UR5state = state.position<br>    rospy.loginfo(UR5state)<br></code></pre></td></tr></table></figure>
+<p>通过这一年的学习算是对强大的ROS系统有了浅薄的了解，但还有很多地方需要学习，例如 **”把所有的节点放到一个Lanuch里” 或者”做成一个Qt可视化界面”**，以及接入力传感器数据等等更多的挑战需要去面对</p>
 
                 
               </div>
@@ -335,7 +312,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/WSL-WSL2/">#WSL/WSL2</a>
+        <a href="/tags/ROS/">#ROS</a>
       
     </div>
   
@@ -347,8 +324,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化</div>
-      <div>http://example.com/2023/03/28/【WSL2学习日志】实现Ubuntu20.04 ROS2(foxy)在win1下的WSL2虚拟化/</div>
+      <div>【ROS学习记录】（四）关于“ROS中订阅subscribe 多个话题并汇聚回调信息处理”以及“UR5 接收关节信息”的学习记录</div>
+      <div>http://example.com/2022/07/20/【ROS学习记录】（四）/</div>
     </div>
     <div class="license-meta">
       
@@ -360,7 +337,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月28日</div>
+          <div>2022年7月20日</div>
         </div>
       
       
@@ -392,12 +369,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/08/27/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89/" title="【ROS学习记录】（五）Win版ROS/Noetic 如何添加必要的依赖(rosdep)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【ROS学习记录】（五）Win版ROS/Noetic 如何添加必要的依赖(rosdep)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/27/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8C%87%E5%8D%97%E5%8F%8A%E9%81%BF%E5%9D%91/" title="【Blog】搭建个人静态博客指南及避坑">
-                        <span class="hidden-mobile">【Blog】搭建个人静态博客指南及避坑</span>
+                      <a href="/2022/05/08/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%89%EF%BC%89/" title="【ROS学习记录】（三）关于ROS控制真实UR5以及手柄(joystick)控制仿真UR5">
+                        <span class="hidden-mobile">【ROS学习记录】（三）关于ROS控制真实UR5以及手柄(joystick)控制仿真UR5</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
