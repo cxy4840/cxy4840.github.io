@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>【Reaserch Program】远程交互式模块化诊疗训练机器人</title>
+    <link href="/2023/05/07/%E3%80%90%E7%A0%94%E7%A9%B6%E9%A1%B9%E7%9B%AE%E3%80%91%E8%BF%9C%E7%A8%8B%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%A8%A1%E5%9D%97%E5%8C%96%E8%AF%8A%E7%96%97%E8%AE%AD%E7%BB%83%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
+    <url>/2023/05/07/%E3%80%90%E7%A0%94%E7%A9%B6%E9%A1%B9%E7%9B%AE%E3%80%91%E8%BF%9C%E7%A8%8B%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%A8%A1%E5%9D%97%E5%8C%96%E8%AF%8A%E7%96%97%E8%AE%AD%E7%BB%83%E6%9C%BA%E5%99%A8%E4%BA%BA/</url>
+    
+    <content type="html"><![CDATA[<h1 id="【研究项目】远程交互式模块化诊疗训练机器人"><a href="#【研究项目】远程交互式模块化诊疗训练机器人" class="headerlink" title="【研究项目】远程交互式模块化诊疗训练机器人"></a>【研究项目】远程交互式模块化诊疗训练机器人</h1>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ROS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【Blog】搭建个人静态博客指南及避坑</title>
     <link href="/2023/03/27/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8C%87%E5%8D%97%E5%8F%8A%E9%81%BF%E5%9D%91/"/>
     <url>/2023/03/27/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8C%87%E5%8D%97%E5%8F%8A%E9%81%BF%E5%9D%91/</url>
@@ -123,6 +142,25 @@
     <url>/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     
     <content type="html"><![CDATA[<h1 id="【ROS】抓紧记录学习动态（二）"><a href="#【ROS】抓紧记录学习动态（二）" class="headerlink" title="【ROS】抓紧记录学习动态（二）"></a>【ROS】抓紧记录学习动态（二）</h1><blockquote><p>上回【ROS】（一）我已经可以通过Subscriber获取Sensor_msgs里publish的信息了，这回我直接想把<a href="https://github.com/sunghowoo/Control-of-two-UR5s-by-two-phantom-omnies-">sunghowoo</a>小哥的summer_gazebo给复现。其实模型方面是没问题的，但是在launch的时候老是有问题，我查了一下是<code>robot_state_publisher</code>没有接收到消息……</p></blockquote><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>在我把资源都放好以后，出现了这样的问题<img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98.png" alt="出现问题"></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">.....<br>[ERROR] [xxx]:Error document empty.<br>[robot_state_publisher-5] process has died<br>.....<br></code></pre></td></tr></table></figure><p>很是苦恼，于是我上ROS_Wiki![rosnode_ping](rosnode ping.png)<br>搜了一下找到了这个<a href="http://wiki.ros.org/robot_state_publisher/Troubleshooting#:~:text=By%20default%20the%20robot%20state%20publisher%20looks%20for,and%20therefore%20does%20not%20have%20a%20root%20link.">robot_state_publisher&#x2F;Troubleshooting</a><br><img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/TroubleShooting.png" alt="TroubleShooting"><br>我尝试了一下<code>$rosnode ping robot_state_publisher</code>因为这个process已经died了所以肯定是没有反应的<img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/process_died.png" alt="process_died.png"><br>又尝试了一下<code>$rostopic hz joint_states</code>出现了<br><img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/joint_states%E5%87%BA%E7%8E%B0.png" alt="joint_states出现.png"><br>也就是说<code>joint_states</code>没有发布关节状态</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>ROS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>ROS Learning Record [I]</title>
+    <link href="/2022/03/05/%5BROS%20Learning%20Record%5D%20I/"/>
+    <url>/2022/03/05/%5BROS%20Learning%20Record%5D%20I/</url>
+    
+    <content type="html"><![CDATA[<h1 id="ROS-Learning-Record-I"><a href="#ROS-Learning-Record-I" class="headerlink" title="ROS Learning Record [I]"></a>ROS Learning Record [I]</h1><blockquote><p>Since the open source on github about PhantomOmni-UR5 source code on this computer reproduced a lot of problems, so repair also way to success (mainly also want to learn how to control the ROS system properly), so I decided to start from scratch and seriously learn the ROS system framework. Recent studies are as follows: </p><ol><li>How to use the Topic that comes with the ROS system?</li><li>How to use Publish and Subscriber?</li><li>How to use Launch files?</li><li>and some minor details of the above.</li></ol></blockquote><h2 id="1-Use-Subscriber-to-get-the-JointState-in-Sensor-msgs"><a href="#1-Use-Subscriber-to-get-the-JointState-in-Sensor-msgs" class="headerlink" title="1. Use Subscriber to get the JointState in Sensor_msgs"></a>1. Use Subscriber to get the JointState in Sensor_msgs</h2><p>In my recent studies, I noticed that for the source code Omni.cpp to communicate between the Publisher and the Subscirber, it must follow the “(Topic) name consistency” rule. For example</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/*************Publisher Code Side******************/</span><br>ros::Publisher joint_states;<br>joint_topic &lt;&lt; <span class="hljs-string">&quot;joint_states&quot;</span>;<br>joint_pub = n.<span class="hljs-built_in">advertise</span>&lt;sensor_msgs::JointState&gt;(joint_topic.<span class="hljs-built_in">str</span>(), <span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure><p>Notice that the name of this node is”joint_states”<br>Then the Subscriber’s code must be receiving “joint_states”</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-comment">/****************Subscriber Code Side***********************/</span><br>ros::Subscriber stateSubscriber = n.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;joint_states&quot;</span>, <span class="hljs-number">1</span> ,stateCallback);<br><span class="hljs-comment">//Here stateCallback is a registered callback function that is responsible for processing the received informatioIt is worth noting that pkg = &quot;xxx&quot;`` is the name that was used previously when creating this feature packagen</span><br><br></code></pre></td></tr></table></figure><p>After compiling, we will see that “joit_states” sends a message to the stateSubscriber!<br><img src="/2022/03/05/%5BROS%20Learning%20Record%5D%20I/stateSubscriber.png" alt="正确的加入节点方式"><br><strong>It is worth noting that</strong> the <code>stateSubscriber</code> node must be under the larger <code>Geomagic</code> group, otherwise it will appear <code>stateSubscriber</code>is excluded, like in the picture below!<br><img src="/2022/03/05/%5BROS%20Learning%20Record%5D%20I/stateSubscriber_2.png" alt="仅加入节点"><br>I don’t know why this is happening yet, but what I do know is that if you put the stateSubscriber node into the same Group as the joint_states in the launch, it’s fine, like this</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs launch">&lt;launch&gt;<br>&lt;arg name=&quot;device_name&quot; default = &quot;Geomagic1&quot;/&gt;<br>&lt;param name = &quot;publish_rate&quot; type=&quot;int&quot; value = &quot;100&quot;/&gt;<br>&lt;group ns=&quot;$(arg device_name)&quot;&gt;<br>&lt;node name = &quot;(arg device_name)&quot; pkg = &quot;geomagic_control&quot; type = &quot;omni&quot; output = &quot;screen&quot;&gt;<br>...<br>&lt;/node&gt;<br>&lt;node name =&quot;omniSubscriber&quot; pkg = &quot;omniSubscriber&quot; type = &quot;omniSubscriber&quot; output = &quot;screen&quot;&gt;<br>&lt;/node&gt;<br>&lt;/group&gt;<br>&lt;/launch&gt;<br></code></pre></td></tr></table></figure><p>It is worth noting that <code>pkg = &quot;xxx&quot;</code> is the name that was used previously when creating this feature package</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make &lt;pkg_name&gt; depend_1 depend_2 .......<br></code></pre></td></tr></table></figure><blockquote><p>This phase of learning gave me a deeper insight into how to create nodes to listen for messages, and was particularly relevant to the subsequent re-creation of a UR5 model!</p></blockquote><hr>]]></content>
     
     
     
