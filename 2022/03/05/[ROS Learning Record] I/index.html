@@ -16,16 +16,16 @@
   <meta name="author" content="Xiaoyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ROS Learning Record [I] Since the open source on github about PhantomOmni-UR5 source code on this computer reproduced a lot of problems, so repair also way to success (mainly also want to learn how to">
+    <meta name="description" content="ROS Learning Record [I] Since the open source on github about PhantomOmni-UR5 source code on this computer reproduced a lot of problems, I decided to start from scratch and seriously learn the ROS sys">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ROS Learning Record [I]">
 <meta property="og:url" content="http://example.com/2022/03/05/[ROS%20Learning%20Record]%20I/index.html">
 <meta property="og:site_name" content="Xiaoyu&#39;s Blog">
-<meta property="og:description" content="ROS Learning Record [I] Since the open source on github about PhantomOmni-UR5 source code on this computer reproduced a lot of problems, so repair also way to success (mainly also want to learn how to">
+<meta property="og:description" content="ROS Learning Record [I] Since the open source on github about PhantomOmni-UR5 source code on this computer reproduced a lot of problems, I decided to start from scratch and seriously learn the ROS sys">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Ros_logo.png">
 <meta property="article:published_time" content="2022-03-05T14:16:16.000Z">
-<meta property="article:modified_time" content="2023-05-08T09:33:55.281Z">
+<meta property="article:modified_time" content="2023-05-08T12:50:57.564Z">
 <meta property="article:author" content="Xiaoyu">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
         
         
         
-          21 分钟
+          20 分钟
         
       </span>
     
@@ -281,19 +281,19 @@
               <div class="markdown-body">
                 
                 <h1 id="ROS-Learning-Record-I"><a href="#ROS-Learning-Record-I" class="headerlink" title="ROS Learning Record [I]"></a>ROS Learning Record [I]</h1><blockquote>
-<p>Since the open source on github about PhantomOmni-UR5 source code on this computer reproduced a lot of problems, so repair also way to success (mainly also want to learn how to control the ROS system properly), so I decided to start from scratch and seriously learn the ROS system framework. Recent studies are as follows: </p>
+<p>Since the open source on github about PhantomOmni-UR5 source code on this computer reproduced a lot of problems, I decided to start from scratch and seriously learn the ROS system framework. The recent targets are as follows: </p>
 <ol>
 <li>How to use the Topic that comes with the ROS system?</li>
 <li>How to use Publish and Subscriber?</li>
 <li>How to use Launch files?</li>
-<li>and some minor details of the above.</li>
+<li>And some minor details of the above.</li>
 </ol>
 </blockquote>
-<h2 id="1-Use-Subscriber-to-get-the-JointState-in-Sensor-msgs"><a href="#1-Use-Subscriber-to-get-the-JointState-in-Sensor-msgs" class="headerlink" title="1. Use Subscriber to get the JointState in Sensor_msgs"></a>1. Use Subscriber to get the JointState in Sensor_msgs</h2><p>In my recent studies, I noticed that for the source code Omni.cpp to communicate between the Publisher and the Subscirber, it must follow the “(Topic) name consistency” rule. For example</p>
+<h2 id="1-Use-Subscriber-to-get-the-JointState-in-Sensor-msgs"><a href="#1-Use-Subscriber-to-get-the-JointState-in-Sensor-msgs" class="headerlink" title="1. Use Subscriber to get the JointState in Sensor_msgs"></a>1. Use <code>Subscriber</code> to get the JointState in Sensor_msgs</h2><p>In my recent studies, I noticed that for the source code Omni.cpp to connect the <code>Publisher</code> with the <code>Subscirber</code>, it must follow the “(Topic) name consistency” rule. For example</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/*************Publisher Code Side******************/</span><br>ros::Publisher joint_states;<br>joint_topic &lt;&lt; <span class="hljs-string">&quot;joint_states&quot;</span>;<br>joint_pub = n.<span class="hljs-built_in">advertise</span>&lt;sensor_msgs::JointState&gt;(joint_topic.<span class="hljs-built_in">str</span>(), <span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure>
-<p>Notice that the name of this node is”joint_states”<br>Then the Subscriber’s code must be receiving “joint_states”</p>
+<p>Notice that the name of this node is “joint_states”<br>Then the Subscriber’s code must be receiving “joint_states”</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><br><span class="hljs-comment">/****************Subscriber Code Side***********************/</span><br>ros::Subscriber stateSubscriber = n.<span class="hljs-built_in">subscribe</span>(<span class="hljs-string">&quot;joint_states&quot;</span>, <span class="hljs-number">1</span> ,stateCallback);<br><span class="hljs-comment">//Here stateCallback is a registered callback function that is responsible for processing the received informatioIt is worth noting that pkg = &quot;xxx&quot;`` is the name that was used previously when creating this feature packagen</span><br><br></code></pre></td></tr></table></figure>
-<p>After compiling, we will see that “joit_states” sends a message to the stateSubscriber!<br><img src="/2022/03/05/%5BROS%20Learning%20Record%5D%20I/stateSubscriber.png" srcset="/img/loading.gif" lazyload alt="正确的加入节点方式"><br><strong>It is worth noting that</strong> the <code>stateSubscriber</code> node must be under the larger <code>Geomagic</code> group, otherwise it will appear <code>stateSubscriber</code>is excluded, like in the picture below!<br><img src="/2022/03/05/%5BROS%20Learning%20Record%5D%20I/stateSubscriber_2.png" srcset="/img/loading.gif" lazyload alt="仅加入节点"><br>I don’t know why this is happening yet, but what I do know is that if you put the stateSubscriber node into the same Group as the joint_states in the launch, it’s fine, like this</p>
+<p>After compiling, we will see that “joit_states” sends a message to the stateSubscriber!<br><img src="/2022/03/05/%5BROS%20Learning%20Record%5D%20I/stateSubscriber.png" srcset="/img/loading.gif" lazyload alt="正确的加入节点方式"><br><strong>It is worth noting that</strong> the <code>stateSubscriber</code> node must be under the larger <code>Geomagic</code> group, otherwise it will appear <code>stateSubscriber</code>is excluded, like the picture shown below!<br><img src="/2022/03/05/%5BROS%20Learning%20Record%5D%20I/stateSubscriber_2.png" srcset="/img/loading.gif" lazyload alt="仅加入节点"><br>I don’t know why this is happening yet, but what I do know is that if you put the <code>stateSubscriber</code> node into the same Group as the joint_states in the launch, it’s fine, like codes demonstrates as the follow lines:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs launch">&lt;launch&gt;<br>	&lt;arg name=&quot;device_name&quot; default = &quot;Geomagic1&quot;/&gt;<br>	&lt;param name = &quot;publish_rate&quot; type=&quot;int&quot; value = &quot;100&quot;/&gt;	<br>	&lt;group ns=&quot;$(arg device_name)&quot;&gt;<br>		&lt;node name = &quot;(arg device_name)&quot; pkg = &quot;geomagic_control&quot; type = &quot;omni&quot; output = &quot;screen&quot;&gt;<br>		...<br>		&lt;/node&gt;<br>		&lt;node name =&quot;omniSubscriber&quot; pkg = &quot;omniSubscriber&quot; type = &quot;omniSubscriber&quot; output = &quot;screen&quot;&gt;<br>		&lt;/node&gt;<br>	&lt;/group&gt;<br>&lt;/launch&gt;<br></code></pre></td></tr></table></figure>
 <p>It is worth noting that <code>pkg = &quot;xxx&quot;</code> is the name that was used previously when creating this feature package</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">catkin_make &lt;pkg_name&gt; depend_1 depend_2 .......<br></code></pre></td></tr></table></figure>
@@ -371,21 +371,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/" title="【ROS学习记录】（二）">
+                      <a href="/2022/03/07/%5BROS%20Learning%20Record%5D%20II/" title="ROS Learning Record [II]">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【ROS学习记录】（二）</span>
+                        <span class="hidden-mobile">ROS Learning Record [II]</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2022/03/05/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%80%EF%BC%89/" title="【ROS学习记录】（一）">
-                        <span class="hidden-mobile">【ROS学习记录】（一）</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>

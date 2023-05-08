@@ -16,16 +16,16 @@
   <meta name="author" content="Xiaoyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="近期为了使得更多的设备可以连入ROS，开始转向Windows平台的ROS，遇到一些问题  无法编译问题，如何解决，参考CSDN:离歌漠,的文章，下载Ninja到系统变量中 编译出现依赖项无法下载的问题，将在下述文章中详细阐述   编译出现依赖项无法下载的问题我们在使用ROS编译的过程中可能会出现这样的问题 12Could not find a package configuration file">
+    <meta name="description" content="【ROS Learning Record [III]: About ROS controling real UR5 and handling (joystick) control simulation UR5一、ROS control of real UR5 processes UR5 can be controlled by synchronizing the real-time state o">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【ROS学习记录】（五）Win版ROS&#x2F;Noetic 如何添加必要的依赖(rosdep)">
-<meta property="og:url" content="http://example.com/2022/08/27/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89/index.html">
+<meta property="og:title" content="ROS Learning Record [III]">
+<meta property="og:url" content="http://example.com/2022/05/08/[ROS%20Learning%20Record]%20III/index.html">
 <meta property="og:site_name" content="Xiaoyu&#39;s Blog">
-<meta property="og:description" content="近期为了使得更多的设备可以连入ROS，开始转向Windows平台的ROS，遇到一些问题  无法编译问题，如何解决，参考CSDN:离歌漠,的文章，下载Ninja到系统变量中 编译出现依赖项无法下载的问题，将在下述文章中详细阐述   编译出现依赖项无法下载的问题我们在使用ROS编译的过程中可能会出现这样的问题 12Could not find a package configuration file">
+<meta property="og:description" content="【ROS Learning Record [III]: About ROS controling real UR5 and handling (joystick) control simulation UR5一、ROS control of real UR5 processes UR5 can be controlled by synchronizing the real-time state o">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Ros_logo.png">
-<meta property="article:published_time" content="2022-08-27T10:56:20.000Z">
-<meta property="article:modified_time" content="2023-03-28T09:42:03.007Z">
+<meta property="article:published_time" content="2022-05-08T09:33:48.000Z">
+<meta property="article:modified_time" content="2023-05-08T13:13:29.968Z">
 <meta property="article:author" content="Xiaoyu">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
   
   
   
-  <title>【ROS学习记录】（五）Win版ROS/Noetic 如何添加必要的依赖(rosdep) - Xiaoyu&#39;s Blog</title>
+  <title>ROS Learning Record [III] - Xiaoyu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,13 +197,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/%E8%93%9D%E8%8A%B1%E6%A5%B9%E6%A0%91%E4%B8%8A%E7%9A%84%E5%B0%8F%E9%B8%9F.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/%E6%A0%A1%E5%86%85%E7%9A%84%E8%93%9D%E8%8A%B1%E6%A5%B9.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="【ROS学习记录】（五）Win版ROS/Noetic 如何添加必要的依赖(rosdep)"></span>
+            <span id="subtitle" data-typed-text="ROS Learning Record [III]"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-08-27 18:56" pubdate>
-          2022年8月27日 晚上
+        <time datetime="2022-05-08 17:33" pubdate>
+          2022年5月8日 下午
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          695 字
+          544 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          6 分钟
+          5 分钟
         
       </span>
     
@@ -275,25 +275,19 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">【ROS学习记录】（五）Win版ROS/Noetic 如何添加必要的依赖(rosdep)</h1>
+            <h1 style="display: none">ROS Learning Record [III]</h1>
             
             
               <div class="markdown-body">
                 
-                <blockquote>
-<p>近期为了使得更多的设备可以连入ROS，开始转向Windows平台的ROS，遇到一些问题</p>
-<ol>
-<li>无法编译问题，如何解决，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36651243/article/details/115689930">CSDN:离歌漠</a>,的文章，下载Ninja到系统变量中</li>
-<li>编译出现依赖项无法下载的问题，将在下述文章中详细阐述</li>
+                <h1 id="【ROS-Learning-Record-III-About-ROS-controling-real-UR5-and-handling-joystick-control-simulation-UR5"><a href="#【ROS-Learning-Record-III-About-ROS-controling-real-UR5-and-handling-joystick-control-simulation-UR5" class="headerlink" title="【ROS Learning Record [III]: About ROS controling real UR5 and handling (joystick) control simulation UR5"></a>【ROS Learning Record [III]: About ROS controling real UR5 and handling (joystick) control simulation UR5</h1><h3 id="一、ROS-control-of-real-UR5-processes"><a href="#一、ROS-control-of-real-UR5-processes" class="headerlink" title="一、ROS control of real UR5 processes"></a>一、ROS control of real UR5 processes</h3><ol>
+<li>UR5 can be controlled by synchronizing the real-time state of the controller but not by movit!</li>
+<li>Because of the version iteration makes “ur_morden_driver” unavailable, RAIN’s (<a target="_blank" rel="noopener" href="https://github.com/inmo-jang/rain_teleoperation/blob/master/xbox_teleop.md">Inmo Jang</a>) code cannot be used and should be re-tooling.<br><img src="/2022/05/08/%5BROS%20Learning%20Record%5D%20III/%E9%97%AE%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="问题"></li>
 </ol>
-</blockquote>
-<h3 id="编译出现依赖项无法下载的问题"><a href="#编译出现依赖项无法下载的问题" class="headerlink" title="编译出现依赖项无法下载的问题"></a>编译出现依赖项无法下载的问题</h3><p>我们在使用ROS编译的过程中可能会出现这样的问题</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">Could not find a package configuration file provided by<br> <span class="hljs-string">&quot;industrial_robot_status_interface&quot;</span> with any of the following names:<br></code></pre></td></tr></table></figure>
-<p><img src="/2022/08/27/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89/%E9%97%AE%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="依赖需要重新下载"><br>在Ubuntu上可以很简单的解决这种依赖找不到的问题，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/gyxx1998/article/details/118153079">CSDN:冰激凌啊</a>，</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install ros-melodic-ur-client-library<br></code></pre></td></tr></table></figure>
-<p>但是在windows上我们只能用git 或者 chocolate，因此我到处找教程发现可以自行下载git包后用rosdep进行导入，参考<a target="_blank" rel="noopener" href="https://github.com/gavanderhoorn/industrial_robot_status_controller">GitHub:gavanderhoorn&#x2F;industrial_robot_status_controller</a><br><img src="/2022/08/27/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89/%E8%87%AA%E8%A1%8C%E4%B8%8B%E8%BD%BDgit%E5%8C%85.png" srcset="/img/loading.gif" lazyload alt="自行下载git包.png"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt; git -C catkin_ws/src <span class="hljs-built_in">clone</span> https://github.com/gavanderhoorn/industrial_robot_status_controller.git<br>&gt; <span class="hljs-comment">#如果不行就直接下载解压到src</span><br>&gt; rosdep update<br>&gt; rosdep install --from-paths src -i<br>&gt; <span class="hljs-built_in">cd</span> catkin_ws<br></code></pre></td></tr></table></figure>
-<p>这样子Windows下的rosdep问题就可以解决了</p>
+<h4 id="二、Joystick-control-simulation-UR5-learning-process"><a href="#二、Joystick-control-simulation-UR5-learning-process" class="headerlink" title="二、Joystick control simulation UR5 learning process"></a>二、Joystick control simulation UR5 learning process</h4><ol>
+<li>Using <a target="_blank" rel="noopener" href="https://github.com/inmo-jang/rain_teleoperation/blob/master/xbox_teleop.md">Inmo Jang’s</a> code we can relize gazebo controlling, but the UR5’s model in the gazebo still twitches，it could be that Joystick did not take over control.</li>
+<li>The next step is to control UR5 with Phantom after the handle!</li>
+</ol>
 
                 
               </div>
@@ -318,8 +312,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【ROS学习记录】（五）Win版ROS/Noetic 如何添加必要的依赖(rosdep)</div>
-      <div>http://example.com/2022/08/27/【ROS学习记录】（五）/</div>
+      <div>ROS Learning Record [III]</div>
+      <div>http://example.com/2022/05/08/[ROS Learning Record] III/</div>
     </div>
     <div class="license-meta">
       
@@ -331,7 +325,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年8月27日</div>
+          <div>2022年5月8日</div>
         </div>
       
       
@@ -363,9 +357,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/07/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/" title="【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化">
+                      <a href="/2022/07/20/%5BROS%20Learning%20Record%5D%20IV/" title="ROS Learning Record [IV]">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化</span>
+                        <span class="hidden-mobile">ROS Learning Record [IV]</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -373,8 +367,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/20/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%9B%9B%EF%BC%89/" title="【ROS学习记录】（四）关于“ROS中订阅subscribe 多个话题并汇聚回调信息处理”以及“UR5 接收关节信息”的学习记录">
-                        <span class="hidden-mobile">【ROS学习记录】（四）关于“ROS中订阅subscribe 多个话题并汇聚回调信息处理”以及“UR5 接收关节信息”的学习记录</span>
+                      <a href="/2022/03/07/%5BROS%20Learning%20Record%5D%20II/" title="ROS Learning Record [II]">
+                        <span class="hidden-mobile">ROS Learning Record [II]</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

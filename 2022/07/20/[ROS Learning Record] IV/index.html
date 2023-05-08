@@ -16,16 +16,16 @@
   <meta name="author" content="Xiaoyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="【ROS】抓紧记录学习动态（二） 上回【ROS】（一）我已经可以通过Subscriber获取Sensor_msgs里publish的信息了，这回我直接想把sunghowoo 小哥的summer_gazebo给复现。其实模型方面是没问题的，但是在launch的时候老是有问题，我查了一下是robot_state_publisher没有接收到消息……  起因在我把资源都放好以后，出现了这样的问题 123">
+    <meta name="description" content="ROS Learning Record [IV]: About “subscribing to multiple topics and aggregating callback messages in ROS” and “UR5 Receiving Joint Messages”.1. Subscribe to multiple topics in ROS and aggregate callba">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【ROS学习记录】（二）">
-<meta property="og:url" content="http://example.com/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:title" content="ROS Learning Record [IV]">
+<meta property="og:url" content="http://example.com/2022/07/20/[ROS%20Learning%20Record]%20IV/index.html">
 <meta property="og:site_name" content="Xiaoyu&#39;s Blog">
-<meta property="og:description" content="【ROS】抓紧记录学习动态（二） 上回【ROS】（一）我已经可以通过Subscriber获取Sensor_msgs里publish的信息了，这回我直接想把sunghowoo 小哥的summer_gazebo给复现。其实模型方面是没问题的，但是在launch的时候老是有问题，我查了一下是robot_state_publisher没有接收到消息……  起因在我把资源都放好以后，出现了这样的问题 123">
+<meta property="og:description" content="ROS Learning Record [IV]: About “subscribing to multiple topics and aggregating callback messages in ROS” and “UR5 Receiving Joint Messages”.1. Subscribe to multiple topics in ROS and aggregate callba">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Ros_logo.png">
-<meta property="article:published_time" content="2022-03-07T13:58:15.000Z">
-<meta property="article:modified_time" content="2023-03-28T09:33:12.119Z">
+<meta property="article:published_time" content="2022-07-20T13:56:38.000Z">
+<meta property="article:modified_time" content="2023-05-08T13:59:09.227Z">
 <meta property="article:author" content="Xiaoyu">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
   
   
   
-  <title>【ROS学习记录】（二） - Xiaoyu&#39;s Blog</title>
+  <title>ROS Learning Record [IV] - Xiaoyu&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -197,13 +197,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/%E8%93%9D%E8%8A%B1%E6%A5%B9%E5%A4%A7%E9%81%93.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/%E8%93%9D%E8%8A%B1%E6%A5%B9%E5%BE%AE%E8%B7%9D.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="【ROS学习记录】（二）"></span>
+            <span id="subtitle" data-typed-text="ROS Learning Record [IV]"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-03-07 21:58" pubdate>
-          2022年3月7日 晚上
+        <time datetime="2022-07-20 21:56" pubdate>
+          2022年7月20日 晚上
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          500 字
+          2.2k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          5 分钟
+          19 分钟
         
       </span>
     
@@ -275,18 +275,31 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">【ROS学习记录】（二）</h1>
+            <h1 style="display: none">ROS Learning Record [IV]</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="【ROS】抓紧记录学习动态（二）"><a href="#【ROS】抓紧记录学习动态（二）" class="headerlink" title="【ROS】抓紧记录学习动态（二）"></a>【ROS】抓紧记录学习动态（二）</h1><blockquote>
-<p>上回【ROS】（一）我已经可以通过Subscriber获取Sensor_msgs里publish的信息了，这回我直接想把<a target="_blank" rel="noopener" href="https://github.com/sunghowoo/Control-of-two-UR5s-by-two-phantom-omnies-">sunghowoo
-</a>小哥的summer_gazebo给复现。其实模型方面是没问题的，但是在launch的时候老是有问题，我查了一下是<code>robot_state_publisher</code>没有接收到消息……</p>
+                <h1 id="ROS-Learning-Record-IV-About-“subscribing-to-multiple-topics-and-aggregating-callback-messages-in-ROS”-and-“UR5-Receiving-Joint-Messages”"><a href="#ROS-Learning-Record-IV-About-“subscribing-to-multiple-topics-and-aggregating-callback-messages-in-ROS”-and-“UR5-Receiving-Joint-Messages”" class="headerlink" title="ROS Learning Record [IV]: About “subscribing to multiple topics and aggregating callback messages in ROS” and “UR5 Receiving Joint Messages”."></a>ROS Learning Record [IV]: About “subscribing to multiple topics and aggregating callback messages in ROS” and “UR5 Receiving Joint Messages”.</h1><h2 id="1-Subscribe-to-multiple-topics-in-ROS-and-aggregate-callback-messages-for-processing"><a href="#1-Subscribe-to-multiple-topics-in-ROS-and-aggregate-callback-messages-for-processing" class="headerlink" title="1. Subscribe to multiple topics in ROS and aggregate callback messages for processing."></a>1. Subscribe to multiple topics in ROS and aggregate callback messages for processing.</h2><blockquote>
+<ul>
+<li>In the course of my study, I need to use the operation of collecting multiple subscription contents into a single function for processing.</li>
+<li>But the general way of subscribing on the web cannot get callback parameters, so I took a lot of wrong turns, for example</li>
+</ul>
+<ol>
+<li>Get the Memory-Address and use ctypes in python to do an address content extraction, refer to (<a target="_blank" rel="noopener" href="https://www.cnblogs.com/pfeiliu/p/12129187.html#:~:text=%E5%9C%A8python%E4%B8%AD%EF%BC%8C%E9%80%9A%E8%BF%87id%E8%8E%B7%E5%8F%96%E5%8F%98%E9%87%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%EF%BC%8C%E9%82%A3%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE%E5%91%A2%EF%BC%9F%20import%20ctypes%20value%20%3D%20%27hello%20world%27%20%23,%3D%20ctypes.cast%20%28address%2C%20ctypes.py_object%29.value%20%23%20%E8%AF%BB%E5%8F%96%E5%9C%B0%E5%9D%80%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%20print%20%28address%2Cget_value%29">Getting data by memory address</a>)，but the results are poor, presumably because ROS itself is strictly encapsulated so that the usual way of extracting memory data is not available;</li>
+<li>Calling the methods in the <strong><code>rospy.topics.Subscriber</code></strong> function also fails to solve the problem: <img src="/2022/07/20/%5BROS%20Learning%20Record%5D%20IV/Subscriber%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="Subscriber cannot solve the problem.png"><br>Then I found this two tutorials:<br>(1) <a target="_blank" rel="noopener" href="https://blog.csdn.net/muyiyushan/article/details/118418040">Multi-sensor time synchronization with message_filter</a><br>(2) <a target="_blank" rel="noopener" href="https://blog.csdn.net/chishuideyu/article/details/77479758">ROS official tutorial –the use of message_filter</a></li>
+</ol>
 </blockquote>
-<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>在我把资源都放好以后，出现了这样的问题<img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98.png" srcset="/img/loading.gif" lazyload alt="出现问题"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">.....<br>[ERROR] [xxx]:Error document empty.<br>[robot_state_publisher-5] process has died<br>.....<br></code></pre></td></tr></table></figure>
-<p>很是苦恼，于是我上ROS_Wiki![rosnode_ping](rosnode ping.png)<br>搜了一下找到了这个<a target="_blank" rel="noopener" href="http://wiki.ros.org/robot_state_publisher/Troubleshooting#:~:text=By%20default%20the%20robot%20state%20publisher%20looks%20for,and%20therefore%20does%20not%20have%20a%20root%20link.">robot_state_publisher&#x2F;Troubleshooting</a><br><img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/TroubleShooting.png" srcset="/img/loading.gif" lazyload alt="TroubleShooting"><br>我尝试了一下<code>$rosnode ping robot_state_publisher</code>因为这个process已经died了所以肯定是没有反应的<img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/process_died.png" srcset="/img/loading.gif" lazyload alt="process_died.png"><br>又尝试了一下<code>$rostopic hz joint_states</code>出现了<br><img src="/2022/03/07/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%8C%EF%BC%89/joint_states%E5%87%BA%E7%8E%B0.png" srcset="/img/loading.gif" lazyload alt="joint_states出现.png"><br>也就是说<code>joint_states</code>没有发布关节状态</p>
+<p>Attached is a lines example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> message_filters<br><span class="hljs-comment">#---------------------Subscriber----------------------</span><br>sub1 	= message_filters.Subscriber(<span class="hljs-string">&#x27;/topic1&#x27;</span> , msg) <br><span class="hljs-comment">#message_filters.Subscriber the same usage as rospy.Subscriber</span><br>sub2	= message_filters.Subscriber(<span class="hljs-string">&#x27;/topic2&#x27;</span> , msg) <br><br><span class="hljs-comment">#---------------------Callback Collection-----------------------</span><br>ts = message_filters.TimeSynchronizer([sub1,sub2],<span class="hljs-number">1</span>)<br>ts.registerCallback( <span class="hljs-string">&#x27;Functions to be passed in&#x27;</span> )<br><span class="hljs-comment">#---------------------END----------------------</span><br></code></pre></td></tr></table></figure>
+<p>The above is only using the template topic.</p>
+<h2 id="二、UR5-Receive-joint-information"><a href="#二、UR5-Receive-joint-information" class="headerlink" title="二、UR5 Receive joint information"></a>二、UR5 Receive joint information</h2><blockquote>
+<p>During the experiment, I wanted to collect information about the joints of the UR5 robot arm, but when I put the rospy.subscriber() function in front of the function that executes the UR5 control (motion), I couldn’t go to the next function. <a target="_blank" rel="noopener" href="https://www.daimajiaoliu.com/daima/56971f320bc6c00">Unknown author operating UR5 robotic arm
+</a><img src="/2022/07/20/%5BROS%20Learning%20Record%5D%20IV/topic.png" srcset="/img/loading.gif" lazyload alt="topic.png"><br>In other words <strong>the subscription will only take effect when there is a joint change in the UR5 arm</strong>, so you have to make the arm move or put the subscription message program after the function that controls the motion of the arm</p>
+</blockquote>
+<p>The sample lines are as follows</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">rospy.Subscriber(<span class="hljs-string">&#x27;/joint_states&#x27;</span>,JointState,getUR5State)<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">getUR5State</span>:<br>	UR5state = state.position<br>    rospy.loginfo(UR5state)<br></code></pre></td></tr></table></figure>
+<p>Through this year’s study I have a shallow understanding of the powerful ROS system, but there are still many areas to learn, such as <strong>“putting all the nodes into a Lanuch”</strong> or <strong>“making a Qt visual interface “</strong> and <strong>“recieving to force sensor data and other more challenges to face. “</strong></p>
 
                 
               </div>
@@ -311,8 +324,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>【ROS学习记录】（二）</div>
-      <div>http://example.com/2022/03/07/【ROS学习记录】（二）/</div>
+      <div>ROS Learning Record [IV]</div>
+      <div>http://example.com/2022/07/20/[ROS Learning Record] IV/</div>
     </div>
     <div class="license-meta">
       
@@ -324,7 +337,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年3月7日</div>
+          <div>2022年7月20日</div>
         </div>
       
       
@@ -356,9 +369,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/08/%E3%80%90ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%89%EF%BC%89/" title="【ROS学习记录】（三）关于ROS控制真实UR5以及手柄(joystick)控制仿真UR5">
+                      <a href="/2022/08/27/%5BROS%20Learning%20Record%5D%20V/" title="ROS Learning Record [V]">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【ROS学习记录】（三）关于ROS控制真实UR5以及手柄(joystick)控制仿真UR5</span>
+                        <span class="hidden-mobile">ROS Learning Record [V]</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -366,8 +379,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/05/%5BROS%20Learning%20Record%5D%20I/" title="ROS Learning Record [I]">
-                        <span class="hidden-mobile">ROS Learning Record [I]</span>
+                      <a href="/2022/05/08/%5BROS%20Learning%20Record%5D%20III/" title="ROS Learning Record [III]">
+                        <span class="hidden-mobile">ROS Learning Record [III]</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
