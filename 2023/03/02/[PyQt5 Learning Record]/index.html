@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="en" data-default-color-scheme=auto>
 
 
 
@@ -16,16 +16,16 @@
   <meta name="author" content="Xiaoyu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="PyQt5–Multithreading: Writing PyQt5 small interface of multithreading wrong demonstration and correct demonstrationI recently intended to package the whole system written into a QT GUI interface and f">
+    <meta name="description" content="PyQt5–Multithreading: Wrong demonstration and correct demonstration for PyQt5 interface of multithreadingI recently intended to package the whole system into a QT GUI interface and found that I needed">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PyQt5 Learning Record.">
 <meta property="og:url" content="http://example.com/2023/03/02/[PyQt5%20Learning%20Record]/index.html">
 <meta property="og:site_name" content="Xiaoyu&#39;s Blog">
-<meta property="og:description" content="PyQt5–Multithreading: Writing PyQt5 small interface of multithreading wrong demonstration and correct demonstrationI recently intended to package the whole system written into a QT GUI interface and f">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:description" content="PyQt5–Multithreading: Wrong demonstration and correct demonstration for PyQt5 interface of multithreadingI recently intended to package the whole system into a QT GUI interface and found that I needed">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/img/%E5%B1%B1%E8%B0%B7%E4%B9%8B%E4%B8%8A%E7%9A%84%E5%B1%B1.jpg">
 <meta property="article:published_time" content="2023-03-02T14:04:52.000Z">
-<meta property="article:modified_time" content="2023-05-09T03:23:22.518Z">
+<meta property="article:modified_time" content="2023-05-09T03:29:32.657Z">
 <meta property="article:author" content="Xiaoyu">
 <meta property="article:tag" content="PyQt5">
 <meta name="twitter:card" content="summary_large_image">
@@ -121,7 +121,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/">
                 <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
+                <span>Home</span>
               </a>
             </li>
           
@@ -133,7 +133,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
+                <span>Archives</span>
               </a>
             </li>
           
@@ -145,7 +145,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/categories/">
                 <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
+                <span>Categories</span>
               </a>
             </li>
           
@@ -157,7 +157,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/tags/">
                 <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
+                <span>Tags</span>
               </a>
             </li>
           
@@ -169,7 +169,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/about/">
                 <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
+                <span>About</span>
               </a>
             </li>
           
@@ -215,7 +215,7 @@
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
         <time datetime="2023-03-02 22:04" pubdate>
-          2023年3月2日 晚上
+          March 2, 2023 pm
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.7k 字
+          7.7k words
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          65 分钟
+          65 mins
         
       </span>
     
@@ -280,9 +280,9 @@
             
               <div class="markdown-body">
                 
-                <h1 id="PyQt5–Multithreading-Writing-PyQt5-small-interface-of-multithreading-wrong-demonstration-and-correct-demonstration"><a href="#PyQt5–Multithreading-Writing-PyQt5-small-interface-of-multithreading-wrong-demonstration-and-correct-demonstration" class="headerlink" title="PyQt5–Multithreading: Writing PyQt5 small interface of multithreading wrong demonstration and correct demonstration"></a>PyQt5–Multithreading: Writing PyQt5 small interface of multithreading wrong demonstration and correct demonstration</h1><p>I recently intended to package the whole system written into a QT GUI interface and found that I needed to use multiple threads to satisfy my need to open multiple ros processes and VirtualBox software at the same time, so the following is a demonstration of the wrong and the correct demonstration:</p>
-<h2 id="1-Wrong-demonstration-of-putting-functions-that-require-multiple-threads-to-be-performed-outside-of-the-RunThread-function"><a href="#1-Wrong-demonstration-of-putting-functions-that-require-multiple-threads-to-be-performed-outside-of-the-RunThread-function" class="headerlink" title="1. Wrong demonstration of putting functions that require multiple threads to be performed outside of the RunThread() function:"></a>1. Wrong demonstration of putting functions that require multiple threads to be performed outside of the RunThread() function:</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#-*- coding:utf-8 -*-</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">PushButton</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>__author__ = <span class="hljs-string">&#x27;Xiaoyu Cai&#x27;</span><br><br><span class="hljs-keyword">import</span> sys,os,time<br><span class="hljs-keyword">from</span> PyQt5.QtCore <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> PyQt5.QtGui <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_time</span>(<span class="hljs-params">fuc1</span>):<br>    <span class="hljs-string">&#x27;&#x27;&#x27;Decorators, Measurement Blocking Timing&#x27;&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">train</span>(<span class="hljs-params">self</span>):<br>        start_time = time.time()<br>        res = fuc1(self)<br>        end_time = time.time()<br>        <span class="hljs-built_in">print</span> (end_time-start_time)<br>        <span class="hljs-keyword">return</span> res<br>    <span class="hljs-keyword">return</span> train<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TabDemo</span>(QTabWidget,QThread):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, parent=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-built_in">super</span>(TabDemo, self).__init__(parent)<br>        self.setGeometry(<span class="hljs-number">200</span>,<span class="hljs-number">500</span>,<span class="hljs-number">500</span>,<span class="hljs-number">200</span>)<br>        self.tab1 = QWidget()<br>        self.tab2 = QWidget()<br>        self.tab3 = QWidget()<br>        self.addTab(self.tab1,<span class="hljs-string">&#x27;xxx&#x27;</span>)<br>        self.addTab(self.tab2,<span class="hljs-string">&#x27;xxx&#x27;</span>)<br>        self.tab1UI()<br>        self.tab2UI()<br>        <span class="hljs-comment"># self.tab3UI()</span><br>        self.setWindowTitle(<span class="hljs-string">&quot;xxxxx&quot;</span>)<br>        <br>        self.show()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">tab1UI</span>(<span class="hljs-params">self</span>):<br>        layout = QFormLayout()<br>        launch = QHBoxLayout()<br>        setupTouch = QPushButton(<span class="hljs-string">&quot;Open Touch_Setup&quot;</span>)<br>        launch.addWidget(setupTouch)<br>        setupTouch.clicked.connect(self.openTouchShell)<br>        roslaunchGeomagic = QPushButton(<span class="hljs-string">&quot;Roslanuch Geomagic&quot;</span>)<br>        launch.addWidget(roslaunchGeomagic)<br>        roslaunchGeomagic.clicked.connect(self.threadOpenGeomagic)<br>        layout.addRow(QLabel(<span class="hljs-string">&quot;Launcher&quot;</span>), launch)<br>        <span class="hljs-comment"># layout.addRow(&quot;生日&quot;, QLineEdit())</span><br>        self.tab1.setLayout(layout)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">tab2UI</span>(<span class="hljs-params">self</span>):<br>        layout = QFormLayout()<br>        layout.addRow(<span class="hljs-string">&#x27;Local IP address:&#x27;</span>,QLineEdit(self.get_host_ip()))<br>        layout.addRow(<span class="hljs-string">&quot;Target IP address&quot;</span>, QLineEdit())<br>        openVirtualBox = QPushButton(<span class="hljs-string">&quot;Open VirtualBox&quot;</span>)<br>        layout.addWidget(openVirtualBox)<br>        openVirtualBox.clicked.connect(self.threadVirtualBox)<br>        self.tab2.setLayout(layout)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_host_ip</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-string">&#x27;&#x27;&#x27;Obtain local IP address&#x27;&#x27;&#x27;</span><br>        <span class="hljs-keyword">try</span>:<br>            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br>            s.connect((<span class="hljs-string">&#x27;8.8.8.8&#x27;</span>, <span class="hljs-number">80</span>))<br>            ip = s.getsockname()[<span class="hljs-number">0</span>]<br>            <span class="hljs-comment"># print(ip)</span><br>            <span class="hljs-comment"># ipaddress = str(ip)</span><br>            <span class="hljs-keyword">return</span> ip<br>        <span class="hljs-keyword">finally</span>:<br>            s.close()<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">openTouchShell</span>(<span class="hljs-params">self</span>):<br>        os.system(<span class="hljs-string">&quot;cd xxx/Touch_Setup&quot;</span>)<br>        <span class="hljs-comment"># chmod a+x /home/xx/my.sh;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">openGeomagic</span>(<span class="hljs-params">self</span>):<br>        os.system(<span class="hljs-string">&quot;roslaunch geomagic_control geomagic.launch&quot;</span>)<br>    <span class="hljs-comment">#错误使用了thread想用threadXXX来打开某个按键，其实是不会进入thread进程的</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">threadOpenGeomagic</span>(<span class="hljs-params">self</span>):<br>        self.thread2 = RunThread()<br>        self.thread2.trigger.connect(self.openGeomagic)<br>        self.thread2.start()<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">threadVirtualBox</span>(<span class="hljs-params">self</span>):<br>        self.thread3 = RunThread()<br>        self.thread3.trigger.connect(self.VirtualBox)<br>        self.thread3.start()<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">VirtualBox</span>(<span class="hljs-params">self</span>):<br>        os.system(<span class="hljs-string">&quot;virtualbox&quot;</span>)<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RunThread</span>(<span class="hljs-title class_ inherited__">QThread</span>):<br>    trigger = pyqtSignal(<span class="hljs-built_in">str</span>)<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, parent=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-built_in">super</span>(RunThread, self).__init__()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-comment"># wechat.start_auto(self.callback)</span><br>        <span class="hljs-comment"># self._signal.emit(msg);  </span><br>        self.trigger.emit(<span class="hljs-string">&quot;ok&quot;</span>)<br>        <span class="hljs-comment"># self._signal.emit(msg)</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">callback</span>(<span class="hljs-params">self, msg</span>):<br>        <span class="hljs-comment"># self._signal.emit(msg)</span><br>        <span class="hljs-keyword">pass</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># print(get_host_ip())</span><br>    app = QApplication(sys.argv)<br>    <span class="hljs-comment"># ip = IPv4AddrLineEdit()</span><br>    <span class="hljs-comment"># ip.show()</span><br>    ex = TabDemo()<br><br>    sys.exit(app.exec_()) <br><br></code></pre></td></tr></table></figure>
-<h2 id="2-Right-demonstration-place-a-keystroke-or-command-that-requires-multiple-threads-under-the-class-RunThread"><a href="#2-Right-demonstration-place-a-keystroke-or-command-that-requires-multiple-threads-under-the-class-RunThread" class="headerlink" title="2. Right demonstration, place a keystroke or command that requires multiple threads under the class RunThread():"></a>2. Right demonstration, place a keystroke or command that requires multiple threads under the class RunThread():</h2><blockquote>
+                <h1 id="PyQt5–Multithreading-Wrong-demonstration-and-correct-demonstration-for-PyQt5-interface-of-multithreading"><a href="#PyQt5–Multithreading-Wrong-demonstration-and-correct-demonstration-for-PyQt5-interface-of-multithreading" class="headerlink" title="PyQt5–Multithreading: Wrong demonstration and correct demonstration for PyQt5 interface of multithreading"></a>PyQt5–Multithreading: Wrong demonstration and correct demonstration for PyQt5 interface of multithreading</h1><p>I recently intended to package the whole system into a QT GUI interface and found that I needed to use multiple threads to satisfy my need to open multiple ROS processes and VirtualBox software at the same time, and there’re some problems I’ve meet. Here are demonstrations of the wrong one and the correct one:</p>
+<h2 id="1-Wrong-way-of-putting-functions-that-require-multiple-threads-to-be-performed-outside-of-the-RunThread-function"><a href="#1-Wrong-way-of-putting-functions-that-require-multiple-threads-to-be-performed-outside-of-the-RunThread-function" class="headerlink" title="1. Wrong way of putting functions that require multiple threads to be performed outside of the RunThread() function"></a>1. Wrong way of putting functions that require multiple threads to be performed outside of the RunThread() function</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#-*- coding:utf-8 -*-</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">PushButton</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>__author__ = <span class="hljs-string">&#x27;Xiaoyu Cai&#x27;</span><br><br><span class="hljs-keyword">import</span> sys,os,time<br><span class="hljs-keyword">from</span> PyQt5.QtCore <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> PyQt5.QtGui <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">test_time</span>(<span class="hljs-params">fuc1</span>):<br>    <span class="hljs-string">&#x27;&#x27;&#x27;Decorators, Measurement Blocking Timing&#x27;&#x27;&#x27;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">train</span>(<span class="hljs-params">self</span>):<br>        start_time = time.time()<br>        res = fuc1(self)<br>        end_time = time.time()<br>        <span class="hljs-built_in">print</span> (end_time-start_time)<br>        <span class="hljs-keyword">return</span> res<br>    <span class="hljs-keyword">return</span> train<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TabDemo</span>(QTabWidget,QThread):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, parent=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-built_in">super</span>(TabDemo, self).__init__(parent)<br>        self.setGeometry(<span class="hljs-number">200</span>,<span class="hljs-number">500</span>,<span class="hljs-number">500</span>,<span class="hljs-number">200</span>)<br>        self.tab1 = QWidget()<br>        self.tab2 = QWidget()<br>        self.tab3 = QWidget()<br>        self.addTab(self.tab1,<span class="hljs-string">&#x27;xxx&#x27;</span>)<br>        self.addTab(self.tab2,<span class="hljs-string">&#x27;xxx&#x27;</span>)<br>        self.tab1UI()<br>        self.tab2UI()<br>        <span class="hljs-comment"># self.tab3UI()</span><br>        self.setWindowTitle(<span class="hljs-string">&quot;xxxxx&quot;</span>)<br>        <br>        self.show()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">tab1UI</span>(<span class="hljs-params">self</span>):<br>        layout = QFormLayout()<br>        launch = QHBoxLayout()<br>        setupTouch = QPushButton(<span class="hljs-string">&quot;Open Touch_Setup&quot;</span>)<br>        launch.addWidget(setupTouch)<br>        setupTouch.clicked.connect(self.openTouchShell)<br>        roslaunchGeomagic = QPushButton(<span class="hljs-string">&quot;Roslanuch Geomagic&quot;</span>)<br>        launch.addWidget(roslaunchGeomagic)<br>        roslaunchGeomagic.clicked.connect(self.threadOpenGeomagic)<br>        layout.addRow(QLabel(<span class="hljs-string">&quot;Launcher&quot;</span>), launch)<br>        <span class="hljs-comment"># layout.addRow(&quot;生日&quot;, QLineEdit())</span><br>        self.tab1.setLayout(layout)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">tab2UI</span>(<span class="hljs-params">self</span>):<br>        layout = QFormLayout()<br>        layout.addRow(<span class="hljs-string">&#x27;Local IP address:&#x27;</span>,QLineEdit(self.get_host_ip()))<br>        layout.addRow(<span class="hljs-string">&quot;Target IP address&quot;</span>, QLineEdit())<br>        openVirtualBox = QPushButton(<span class="hljs-string">&quot;Open VirtualBox&quot;</span>)<br>        layout.addWidget(openVirtualBox)<br>        openVirtualBox.clicked.connect(self.threadVirtualBox)<br>        self.tab2.setLayout(layout)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_host_ip</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">str</span>:<br>        <span class="hljs-string">&#x27;&#x27;&#x27;Obtain local IP address&#x27;&#x27;&#x27;</span><br>        <span class="hljs-keyword">try</span>:<br>            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br>            s.connect((<span class="hljs-string">&#x27;8.8.8.8&#x27;</span>, <span class="hljs-number">80</span>))<br>            ip = s.getsockname()[<span class="hljs-number">0</span>]<br>            <span class="hljs-comment"># print(ip)</span><br>            <span class="hljs-comment"># ipaddress = str(ip)</span><br>            <span class="hljs-keyword">return</span> ip<br>        <span class="hljs-keyword">finally</span>:<br>            s.close()<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">openTouchShell</span>(<span class="hljs-params">self</span>):<br>        os.system(<span class="hljs-string">&quot;cd xxx/Touch_Setup&quot;</span>)<br>        <span class="hljs-comment"># chmod a+x /home/xx/my.sh;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">openGeomagic</span>(<span class="hljs-params">self</span>):<br>        os.system(<span class="hljs-string">&quot;roslaunch geomagic_control geomagic.launch&quot;</span>)<br>    <span class="hljs-comment">#The wrong use of thread, trying to use threadXXX to open a key, will not actually enter the thread process!</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">threadOpenGeomagic</span>(<span class="hljs-params">self</span>):<br>        self.thread2 = RunThread()<br>        self.thread2.trigger.connect(self.openGeomagic)<br>        self.thread2.start()<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">threadVirtualBox</span>(<span class="hljs-params">self</span>):<br>        self.thread3 = RunThread()<br>        self.thread3.trigger.connect(self.VirtualBox)<br>        self.thread3.start()<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">VirtualBox</span>(<span class="hljs-params">self</span>):<br>        os.system(<span class="hljs-string">&quot;virtualbox&quot;</span>)<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RunThread</span>(<span class="hljs-title class_ inherited__">QThread</span>):<br>    trigger = pyqtSignal(<span class="hljs-built_in">str</span>)<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, parent=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-built_in">super</span>(RunThread, self).__init__()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-comment"># wechat.start_auto(self.callback)</span><br>        <span class="hljs-comment"># self._signal.emit(msg);  </span><br>        self.trigger.emit(<span class="hljs-string">&quot;ok&quot;</span>)<br>        <span class="hljs-comment"># self._signal.emit(msg)</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">callback</span>(<span class="hljs-params">self, msg</span>):<br>        <span class="hljs-comment"># self._signal.emit(msg)</span><br>        <span class="hljs-keyword">pass</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># print(get_host_ip())</span><br>    app = QApplication(sys.argv)<br>    <span class="hljs-comment"># ip = IPv4AddrLineEdit()</span><br>    <span class="hljs-comment"># ip.show()</span><br>    ex = TabDemo()<br><br>    sys.exit(app.exec_()) <br><br></code></pre></td></tr></table></figure>
+<h2 id="2-Right-demonstration-place-a-keystroke-or-command-that-requires-multiple-threads-under-the-class-RunThread"><a href="#2-Right-demonstration-place-a-keystroke-or-command-that-requires-multiple-threads-under-the-class-RunThread" class="headerlink" title="2. Right demonstration: place a keystroke or command that requires multiple threads under the class RunThread()"></a>2. Right demonstration: place a keystroke or command that requires multiple threads under the class RunThread()</h2><blockquote>
 <p>I am inspired by the phrase below:</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">RunThread</span>(<span class="hljs-title class_ inherited__">QThread</span>):<br>    trigger = pyqtSignal(<span class="hljs-built_in">str</span>)<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, parent=<span class="hljs-literal">None</span></span>):<br>        <span class="hljs-built_in">super</span>(RunThread, self).__init__()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-comment"># Handle the business logic you want to do, here the data is handled through a callback, here the logic is handled write your own method</span><br>        <span class="hljs-comment"># wechat.start_auto(self.callback)</span><br>        <span class="hljs-comment"># self._signal.emit(msg);  You can write the signal emit here.</span><br>        self.VirtualBox()<br>        self.trigger.emit(<span class="hljs-string">&quot;ok&quot;</span>)<br>        <span class="hljs-comment"># self._signal.emit(msg)</span><br></code></pre></td></tr></table></figure>
@@ -321,26 +321,26 @@
     <div class="license-meta">
       
         <div class="license-meta-item">
-          <div>作者</div>
+          <div>Author</div>
           <div>Xiaoyu</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2023年3月2日</div>
+          <div>Posted on</div>
+          <div>March 2, 2023</div>
         </div>
       
       
       
         <div class="license-meta-item">
-          <div>许可协议</div>
+          <div>Licensed under</div>
           <div>
             
               
               
                 <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
                     <i class="iconfont icon-by"></i>
                   </span>
                 </a>
@@ -363,7 +363,7 @@
                       <a href="/2023/05/07/Research%20Program/" title="Research Program">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Research Program</span>
-                        <span class="visible-mobile">上一篇</span>
+                        <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
@@ -372,7 +372,7 @@
                     
                       <a href="/2023/02/07/%5BWSL%20Learning%20Record%5D/" title="WSL Learning Record [I]">
                         <span class="hidden-mobile">WSL Learning Record [I]</span>
-                        <span class="visible-mobile">下一篇</span>
+                        <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
@@ -393,7 +393,7 @@
     <div id="toc">
   <p class="toc-header">
     <i class="iconfont icon-list"></i>
-    <span>目录</span>
+    <span>Table of Contents</span>
   </p>
   <div class="toc-body" id="toc-body"></div>
 </div>
@@ -449,7 +449,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -457,7 +457,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -657,7 +657,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
   </noscript>
 </body>
 </html>
