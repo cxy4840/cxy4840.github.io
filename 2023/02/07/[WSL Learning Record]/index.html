@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/MoonAndFlower.JPG">
 <meta property="article:published_time" content="2023-02-06T16:47:10.000Z">
-<meta property="article:modified_time" content="2023-05-09T02:20:48.294Z">
+<meta property="article:modified_time" content="2023-05-09T02:31:55.540Z">
 <meta property="article:author" content="Xiaoyu">
 <meta property="article:tag" content="WSL&#x2F;WSL2">
 <meta name="twitter:card" content="summary_large_image">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          3.2k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          21 分钟
+          28 分钟
         
       </span>
     
@@ -287,7 +287,7 @@
 <h2 id="B-How-to-achieve-it"><a href="#B-How-to-achieve-it" class="headerlink" title="B. How to achieve it?"></a>B. How to achieve it?</h2><h3 id="1-Hardware-configuration-requirements"><a href="#1-Hardware-configuration-requirements" class="headerlink" title="1. Hardware configuration requirements"></a>1. Hardware configuration requirements</h3><blockquote>
 <p>windows 11 or windows 10 version 2004 and higher (internal version 19041 and higher)</p>
 </blockquote>
-<h3 id="2-学习教程"><a href="#2-学习教程" class="headerlink" title="2. 学习教程"></a>2. 学习教程</h3><blockquote>
+<h3 id="2-Learning-Tutorial"><a href="#2-Learning-Tutorial" class="headerlink" title="2. Learning Tutorial"></a>2. Learning Tutorial</h3><blockquote>
 <ol>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">Microsoft Learn Official Learning WSL Tutorial</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/sandonz/article/details/120854876">sandonz About WSL Ubuntu 20.04 and its GUI installation and configuration</a> Application of the tutorial can achieve windows comes with remote desktop connection service, although more lagging but the effect is significant (It is worth noting that the tutorial source change for 20.04 is particularly good, be sure to replace the source in the tutorial in time. In my previous use of ubuntu 22.04 when the source change problem has always bothered me.)</li>
@@ -295,33 +295,35 @@
 </ol>
 </blockquote>
 <h3 id="3-Practice-process"><a href="#3-Practice-process" class="headerlink" title="3. Practice process"></a>3. Practice process</h3><h4 id="3-0-Basic-settings"><a href="#3-0-Basic-settings" class="headerlink" title="3.0 Basic settings"></a>3.0 Basic settings</h4><blockquote>
-<p>Search in ‘Start’ button for ‘Enable or disable windows features’<br><img src="/%E5%90%AF%E7%94%A8%E6%88%96%E5%85%B3%E9%97%ADwindows%E5%8A%9F%E8%83%BD.png" srcset="/img/loading.gif" lazyload alt="Enable or disable windows features"><br>Click to check all the options involved in the following pictures, be aware that Hyper-V may not be able to check all, to modify the BIOS to enable the CPU virtualization function. There are some details in <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41460654/article/details/118026986">DongKuKu: How to enable CPU virtualization on Windows PC? </a>This step is very important, if you don’t turn on Hyper-V, you won’t be able to upgrade WSL2, which will lead to many bugs and the rviz2 and rqt_graph in ROS2 can’t be turned on in the windows interface.(当然了，届时必须下载python Qt-5才可以打开这些界面)<img src="/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%B9%B3%E5%8F%B0.png" srcset="/img/loading.gif" lazyload alt="虚拟机平台"><img src="/%E9%80%82%E7%94%A8Linux%E7%9A%84Windows%E5%AD%90%E7%B3%BB%E7%BB%9F.png" srcset="/img/loading.gif" lazyload alt="适用Linux的Windows子系统"><br><img src="/Windows%E8%99%9A%E6%8B%9F%E7%A8%8B%E5%BA%8F%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0.png" srcset="/img/loading.gif" lazyload alt="Windows虚拟程序监控平台"><br><img src="/Hyper-V.png" srcset="/img/loading.gif" lazyload alt="Hyper-V"></p>
+<p>Search in ‘Start’ button for ‘Enable or disable windows features’<br><img src="/2023/02/07/%5BWSL%20Learning%20Record%5D/%E5%90%AF%E7%94%A8%E6%88%96%E5%85%B3%E9%97%ADwindows%E5%8A%9F%E8%83%BD.png" srcset="/img/loading.gif" lazyload alt="Enable or disable windows features"><br>Click to check all the options involved in the following pictures, be aware that Hyper-V may not be able to check all, to modify the BIOS to enable the CPU virtualization function. There are some details in <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41460654/article/details/118026986">DongKuKu: How to enable CPU virtualization on Windows PC? </a>This step is very important, if you don’t turn on Hyper-V, you won’t be able to upgrade WSL2, which will lead to many bugs and the rviz2 and rqt_graph in ROS2 can’t be turned on in the windows interface. (Of course, you will have to download python Qt-5 to open these interfaces. )<img src="/2023/02/07/%5BWSL%20Learning%20Record%5D/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%B9%B3%E5%8F%B0.png" srcset="/img/loading.gif" lazyload alt="Virtual Machine Platform"><img src="/2023/02/07/%5BWSL%20Learning%20Record%5D/%E9%80%82%E7%94%A8Linux%E7%9A%84Windows%E5%AD%90%E7%B3%BB%E7%BB%9F.png" srcset="/img/loading.gif" lazyload alt="Windows subsystem for Linux"><br><img src="/2023/02/07/%5BWSL%20Learning%20Record%5D/Windows%E8%99%9A%E6%8B%9F%E7%A8%8B%E5%BA%8F%E7%9B%91%E6%8E%A7%E5%B9%B3%E5%8F%B0.png" srcset="/img/loading.gif" lazyload alt="Windows virtual program monitoring platform"><br><img src="/2023/02/07/%5BWSL%20Learning%20Record%5D/Hyper-V.png" srcset="/img/loading.gif" lazyload alt="Hyper-V"></p>
 </blockquote>
-<h4 id="3-1-下载安装windows-subsystem-for-Linux-wsl-和-ubuntu-20-04"><a href="#3-1-下载安装windows-subsystem-for-Linux-wsl-和-ubuntu-20-04" class="headerlink" title="3.1 下载安装windows subsystem for Linux (wsl) 和 ubuntu 20.04"></a>3.1 下载安装windows subsystem for Linux (wsl) 和 ubuntu 20.04</h4><h5 id="3-1-1"><a href="#3-1-1" class="headerlink" title="3.1.1"></a>3.1.1</h5><p>直接在PowerShell或者CMD里输入</p>
+<h4 id="3-1-Download-and-install-windows-subsystem-for-Linux-wsl-and-ubuntu-20-04"><a href="#3-1-Download-and-install-windows-subsystem-for-Linux-wsl-and-ubuntu-20-04" class="headerlink" title="3.1 Download and install windows subsystem for Linux (wsl) and ubuntu 20.04"></a>3.1 Download and install windows subsystem for Linux (wsl) and ubuntu 20.04</h4><h5 id="3-1-1"><a href="#3-1-1" class="headerlink" title="3.1.1"></a>3.1.1</h5><p>Type directly into PowerShell or CMD</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --intsall<br></code></pre></td></tr></table></figure>
 <p>输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --list --online <span class="hljs-comment">#查看可下载的Linux版本</span><br>wsl --install -d Ubuntu-xx.xx <span class="hljs-comment">#下载对应需要的Ubuntu版本，我选择熟悉的Ubuntu-22.04</span><br></code></pre></td></tr></table></figure>
-<p>也可以在应用商店里直接下载Ubuntu<br>下载完打开<code>Ubuntu20.04 </code>可能会出现一些错误，这个时候直接把<code>wsl</code>换成1，命令如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --list --online <span class="hljs-comment">#View downloadable Linux versions</span><br>wsl --install -d Ubuntu-xx.xx <span class="hljs-comment">#Download the corresponding Ubuntu version you need, I chose the familiar Ubuntu-22.04</span><br></code></pre></td></tr></table></figure>
+<p>You can also download Ubuntu directly from the app store.<br>After downloading and opening <code>Ubuntu 20.04</code> some errors may appear, at this time directly replace <code>wsl</code> with 1, the command is as follows: </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl --set-version 1<br></code></pre></td></tr></table></figure>
-<p>，再打开<code>Ubuntu20.04</code>就会出现等待几分钟（Wait for a few minutes）<br>等到出现要求我们输入账号密码的时候就证明配置好了，相比起双系统 这种安装Ubuntu的方式真的快了很多倍。</p>
-<h4 id="3-2-将WSL更换为WSL2"><a href="#3-2-将WSL更换为WSL2" class="headerlink" title="3.2 将WSL更换为WSL2"></a>3.2 将WSL更换为WSL2</h4><blockquote>
-<p>PS:如果不打开Hpyer-V的所有选项，这一步是不能完成的，会导致以下几个问题：</p>
+<p>Open <code>Ubuntu 20.04</code> again and you will see Wait for a few minutes.<br>By the time we are asked to enter our password, the configuration is ready, and it’s really a lot faster than a dual system installation of Ubuntu.</p>
+<h4 id="3-2-Replace-WSL-with-WSL2"><a href="#3-2-Replace-WSL-with-WSL2" class="headerlink" title="3.2 Replace WSL with WSL2"></a>3.2 Replace WSL with WSL2</h4><blockquote>
+<p>Note: This step cannot be completed without turning on all the options of Hpyer-V and will lead to several problems</p>
 <ol>
-<li>无法在<code>windows</code>界面上看到<code>rqt_graph</code>或者<code>rviz2</code>等可视化界面</li>
-<li>ROS的不同terminal之间的联系好像也断开了，本人尝试过在一个windows terminal标签页里打开<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py talker<br></code></pre></td></tr></table></figure>
-在另外一个标签页里打开<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py listener<br></code></pre></td></tr></table></figure>
-他们两个节点之间是没有通信的，而且<code>rqt_graph</code>也没有节点图<br>很简单，在打开Hyper-V后在<code>windows terminal</code>里改</li>
+<li>Unable to see <code>rqt_graph</code> or <code>rviz2</code> visual interfaces on <code>windows</code> interface</li>
+<li>The connection between different terminals of ROS seems to be broken, I have tried to open in a windows terminal tab<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py talker<br></code></pre></td></tr></table></figure>
+Open another termimal tab<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py listener<br></code></pre></td></tr></table></figure>
+There is no communication between their two nodes, and there is no node graph for <code>rqt_graph</code>. It is very simple, after opening Hyper-V in the <code>windows terminal</code> change.</li>
 </ol>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl -l -v<br>wsl --set-default-version 2<br><span class="hljs-comment">#或者针对某个Linux</span><br>wsl --set-version Ubuntu-xx.xx 2<br></code></pre></td></tr></table></figure>
-<h4 id="3-3-修改WSL2占用的内存，可以降低WSL出现蓝屏的可能"><a href="#3-3-修改WSL2占用的内存，可以降低WSL出现蓝屏的可能" class="headerlink" title="3.3 修改WSL2占用的内存，可以降低WSL出现蓝屏的可能"></a>3.3 修改WSL2占用的内存，可以降低WSL出现蓝屏的可能</h4><blockquote>
-<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/lian740930980/article/details/127638402#:~:text=%E8%A7%A3%E5%86%B3WSL2%E4%B8%ADVmmem%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E5%A4%A7%E9%97%AE%E9%A2%98%20%E6%95%99%E7%A8%8B%20%E8%B5%B7%E5%9B%A0%20Windows%20%E7%9A%84linux%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%9C%80%E5%A4%A7%20%E5%8D%A0%E7%94%A8%20%E5%8F%AF%E5%88%B0%E6%9C%AC%E6%9C%BA%E5%99%A8%E7%9A%8480%25%EF%BC%8C%E6%89%80%E4%BB%A5%E5%BF%85%E9%A1%BB%E9%99%90%E5%88%B6%E4%B8%80%E4%B8%8B%E5%AE%83%E7%9A%84%E6%80%A7%E8%83%BD%E6%9D%A5%E8%BE%BE%E5%88%B0%E4%BC%98%E5%8C%96%E7%9B%AE%E7%9A%84%20%E4%BC%98%E5%8C%96,%E5%86%85%E5%AD%98%20%E4%B8%8A%E9%99%90%EF%BC%8C%E8%BF%99%E9%87%8C%E6%88%91%E9%99%90%E5%88%B6%E6%9C%80%E5%A4%A72gb%EF%BC%8C%E5%8F%AF%E6%A0%B9%E6%8D%AE%E8%87%AA%E8%BA%AB%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%E8%AE%BE%E7%BD%AE%20%5B%20wsl2%20%5D%20memory%3D2GB%20swap%3D0%20localhostForwarding%3Dtrue">甜甜的初夏_解决WSL2中Vmmem内存占用过大问题
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">wsl -l -v<br>wsl --set-default-version 2<br><span class="hljs-comment"># Or for a particular Linux</span><br>wsl --set-version Ubuntu-xx.xx 2<br></code></pre></td></tr></table></figure>
+<h4 id="3-3-Modify-the-memory-occupied-by-WSL2-which-can-reduce-the-possibility-of-WSL-blue-screen"><a href="#3-3-Modify-the-memory-occupied-by-WSL2-which-can-reduce-the-possibility-of-WSL-blue-screen" class="headerlink" title="3.3 Modify the memory occupied by WSL2, which can reduce the possibility of WSL blue screen"></a>3.3 Modify the memory occupied by WSL2, which can reduce the possibility of WSL blue screen</h4><blockquote>
+<p>Reference <a target="_blank" rel="noopener" href="https://blog.csdn.net/lian740930980/article/details/127638402#:~:text=%E8%A7%A3%E5%86%B3WSL2%E4%B8%ADVmmem%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E8%BF%87%E5%A4%A7%E9%97%AE%E9%A2%98%20%E6%95%99%E7%A8%8B%20%E8%B5%B7%E5%9B%A0%20Windows%20%E7%9A%84linux%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%9C%80%E5%A4%A7%20%E5%8D%A0%E7%94%A8%20%E5%8F%AF%E5%88%B0%E6%9C%AC%E6%9C%BA%E5%99%A8%E7%9A%8480%25%EF%BC%8C%E6%89%80%E4%BB%A5%E5%BF%85%E9%A1%BB%E9%99%90%E5%88%B6%E4%B8%80%E4%B8%8B%E5%AE%83%E7%9A%84%E6%80%A7%E8%83%BD%E6%9D%A5%E8%BE%BE%E5%88%B0%E4%BC%98%E5%8C%96%E7%9B%AE%E7%9A%84%20%E4%BC%98%E5%8C%96,%E5%86%85%E5%AD%98%20%E4%B8%8A%E9%99%90%EF%BC%8C%E8%BF%99%E9%87%8C%E6%88%91%E9%99%90%E5%88%B6%E6%9C%80%E5%A4%A72gb%EF%BC%8C%E5%8F%AF%E6%A0%B9%E6%8D%AE%E8%87%AA%E8%BA%AB%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%E8%AE%BE%E7%BD%AE%20%5B%20wsl2%20%5D%20memory%3D2GB%20swap%3D0%20localhostForwarding%3Dtrue">Tiantiandechuxia: Solve the problem of excessive memory usage of Vmmem in WSL2
 </a></p>
 </blockquote>
-<h4 id="3-4-安装ROS-foxy"><a href="#3-4-安装ROS-foxy" class="headerlink" title="3.4 安装ROS foxy"></a>3.4 安装ROS foxy</h4><blockquote>
-<p>说在前头：由于我们在前面的工作中把源换好了接下来可以直接安装ROS了<br>最标准的安装方法直接参照ROS官网的安装方法<a target="_blank" rel="noopener" href="https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html">ROS foxy Installation</a><br>安装完毕后就可以尝试</p>
+<h4 id="3-4-Installing-ROS-foxy"><a href="#3-4-Installing-ROS-foxy" class="headerlink" title="3.4 Installing ROS foxy"></a>3.4 Installing ROS foxy</h4><blockquote>
+<p>Since we have changed the source in the previous work next you can directly install ROS.<br>The most standard installation method directly refers to the installation method on the ROS website <a target="_blank" rel="noopener" href="https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html">ROS foxy Installation</a><br>Once installed, you can try</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py talker<br></code></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py listener<br></code></pre></td></tr></table></figure></blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">&gt;<span class="hljs-built_in">source</span> /opt/ros/foxy/setup.bash<br>&gt;ros2 run demo_nodes_py listener<br></code></pre></td></tr></table></figure>
+<p>So far, the installation of ROS (Foxy) in WSL environment and successful.</p>
+</blockquote>
 
                 
               </div>
@@ -391,9 +393,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/02/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" title="【PyQt5-多线程】写PyQt5小界面的多线程错误示范和正确示范">
+                      <a href="/2023/03/02/%5BPyQt5%20Learning%20Record%5D/" title="PyQt5 Learning Record.">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【PyQt5-多线程】写PyQt5小界面的多线程错误示范和正确示范</span>
+                        <span class="hidden-mobile">PyQt5 Learning Record.</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -401,8 +403,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/07/%E3%80%90WSL2%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E3%80%91%E5%AE%9E%E7%8E%B0Ubuntu20.04%20ROS2(foxy)%E5%9C%A8win1%E4%B8%8B%E7%9A%84WSL2%E8%99%9A%E6%8B%9F%E5%8C%96/" title="【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化">
-                        <span class="hidden-mobile">【WSL2 学习日志】实现Ubuntu20.04  ROS2_foxy 在win11下的WSL2虚拟化</span>
+                      <a href="/2022/08/27/%5BROS%20Learning%20Record%5D%20V/" title="ROS Learning Record [V]">
+                        <span class="hidden-mobile">ROS Learning Record [V]</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
